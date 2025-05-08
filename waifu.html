@@ -6,18 +6,19 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #ffe0f0, #f4f7fa);
+      background: linear-gradient(to bottom right, var(--bg-start, #ffe0f0), var(--bg-end, #f4f7fa));
       margin: 0;
       padding: 2rem;
       display: flex;
       flex-wrap: wrap;
       min-height: 100vh;
       flex-direction: row;
+      position: relative;
     }
 
     h1 {
       text-align: center;
-      color: #ff66a3;
+      color: var(--h1-color, #ff66a3);
       margin-bottom: 1rem;
     }
 
@@ -29,7 +30,7 @@
     }
 
     .tabs button {
-      background: #ff99cc;
+      background: var(--tab-bg, #ff99cc);
       border: none;
       color: white;
       padding: 0.75rem 1.5rem;
@@ -40,7 +41,7 @@
     }
 
     .tabs button:hover {
-      background: #ff66a3;
+      background: var(--tab-hover, #ff66a3);
     }
 
     .search-bar {
@@ -69,14 +70,17 @@
       overflow: hidden;
     }
 
-    th, td {
+    th {
+      background: var(--th-bg, #ffccdd);
       padding: 1rem;
       border-bottom: 1px solid #eee;
       text-align: left;
     }
 
-    th {
-      background: #ffccdd;
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+      text-align: left;
     }
 
     tr:hover {
@@ -101,7 +105,7 @@
     }
 
     .sidebar h2 {
-      color: #ff66a3;
+      color: var(--sidebar-h2, #ff66a3);
       margin-top: 0;
     }
 
@@ -120,7 +124,7 @@
     }
 
     .sidebar button {
-      background: #ff99cc;
+      background: var(--tab-bg, #ff99cc);
       border: none;
       color: white;
       padding: 0.75rem;
@@ -131,21 +135,47 @@
     }
 
     .sidebar button:hover {
-      background: #ff66a3;
+      background: var(--tab-hover, #ff66a3);
     }
 
     .main-content {
       flex: 1;
       max-width: 1000px;
     }
+
     .banner-container {
       width: 300px;
       margin-left: 2rem;
       text-align: center;
     }
 
+    #image-banner {
+      width: 100%;
+      height: 600px;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      background-color: var(--banner-bg, #fff0f5);
+      box-sizing: border-box;
+    }
+
+    #image-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: none;
+      transition: opacity 0.5s ease-in-out;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    #image-banner img.active {
+      display: block;
+      opacity: 1;
+    }
+
     .next-button, .gamble-button {
-      background: #ff99cc;
+      background: var(--tab-bg, #ff99cc);
       border: none;
       color: white;
       padding: 0.75rem 1.5rem;
@@ -157,37 +187,15 @@
     }
 
     .next-button:hover, .gamble-button:hover {
-      background: #ff66a3;
-    }
-    #image-banner {
-      width: 100%;
-      height: 600px;
-      overflow: hidden;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      background-color: #fff0f5;
-      box-sizing: border-box;
-    }
-
-
-    #image-banner img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: none;
-      transition: opacity 0.5s ease-in-out;
-    }
-    #image-banner img.active {
-      display: block;
-      opacity: 1;
+      background: var(--tab-hover, #ff66a3);
     }
 
     footer {
-      background-color: #fce4ec;
+      background-color: var(--footer-bg, #fce4ec);
       padding: 1.5rem;
       text-align: center;
       font-size: 0.9rem;
-      color: #555;
+      color: var(--footer-text, #555);
       width: 100%;
       position: relative;
       margin-top: auto;
@@ -202,6 +210,7 @@
     footer a:hover {
       text-decoration: underline;
     }
+
     .form-section {
       display: none;
     }
@@ -209,9 +218,47 @@
     .form-section.active {
       display: block;
     }
+
+    .theme-menu {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+
+    .theme-menu select {
+      background: #fff;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0.25rem;
+    }
+
+    .theme-menu select:hover {
+      background: #f0f0f0;
+    }
   </style>
 </head>
 <body>
+  <div class="theme-menu">
+    <select onchange="changeTheme(this.value)">
+      <option value="0">Pink</option>
+      <option value="1">Red-Purple</option>
+      <option value="2">Green</option>
+      <option value="3">Yellow</option>
+      <option value="4">Red</option>
+      <option value="5">Black-Gray-White</option>
+      <option value="6">Blue</option>
+      <option value="7">Orange</option>
+      <option value="8">Teal</option>
+      <option value="9">Purple</option>
+      <option value="10">Pastel</option>
+    </select>
+  </div>
   <div class="sidebar">
     <div id="waifu-form" class="form-section active">
       <h2>Add Waifu</h2>
@@ -418,20 +465,36 @@
       <img src="images/waifu9.webp" alt="Waifu Character 9">
     </div>
     <button class="next-button" onclick="skipImage()">Next</button>
-    <button class="gamble-button" onclick="gambleImage()">Always Gamble</button>
+    <button class="gamble-button" onclick="gambleImage()">Gamble</button>
   </div>
 
   <footer>
     <div class="impressum">
       <p>© 2025 Waifu Database. Alle Rechte vorbehalten.</p>
       <p><strong>Impressum:</strong> Sigma Rizzler, Diddystraße 69, 696969 Ohio<br>
-      E-Mail: <a href="mailto:sigma@fortnite.de">sigma@fortnite.de</a></p>
+      E-Mail: <a href="mailto:sigma@fortnite.de">sigma@fortnite.de"></a></p>
     </div>
   </footer>
 
   <script>
     let currentTab = 'waifu';
     let searchInput, sortSelect;
+    let themeIndex = 0;
+
+    // Define all themes with their respective colors
+    const themes = [
+      { bgStart: '#ffe0f0', bgEnd: '#f4f7fa', tabBg: '#ff99cc', tabHover: '#ff66a3', thBg: '#ffccdd', h1Color: '#ff66a3', sidebarH2: '#ff66a3', bannerBg: '#fff0f5', footerBg: '#fce4ec', footerText: '#555' }, // Pink
+      { bgStart: '#4a1e2e', bgEnd: '#2d1b24', tabBg: '#6b2d3a', tabHover: '#8a2e3b', thBg: '#7a3d4c', h1Color: '#ff4d6d', sidebarH2: '#ff4d6d', bannerBg: '#3a1e2a', footerBg: '#2d1b24', footerText: '#e0e0e0' }, // Red-Purple
+      { bgStart: '#d4e4d2', bgEnd: '#e6f0e6', tabBg: '#81c784', tabHover: '#66bb6a', thBg: '#a5d6a7', h1Color: '#2e7d32', sidebarH2: '#2e7d32', bannerBg: '#e0f0e0', footerBg: '#c8e6c9', footerText: '#2e7d32' }, // Green
+      { bgStart: '#fff9e6', bgEnd: '#fff3cc', tabBg: '#ffca28', tabHover: '#ffb300', thBg: '#ffe082', h1Color: '#f57f17', sidebarH2: '#f57f17', bannerBg: '#fffde7', footerBg: '#fff9e6', footerText: '#f57f17' }, // Yellow
+      { bgStart: '#ffebee', bgEnd: '#ffcdd2', tabBg: '#ef5350', tabHover: '#e53935', thBg: '#ef9a9a', h1Color: '#c62828', sidebarH2: '#c62828', bannerBg: '#ffebee', footerBg: '#ffcdd2', footerText: '#c62828' }, // Red
+      { bgStart: '#212121', bgEnd: '#bdbdbd', tabBg: '#616161', tabHover: '#424242', thBg: '#757575', h1Color: '#ffffff', sidebarH2: '#e0e0e0', bannerBg: '#424242', footerBg: '#212121', footerText: '#e0e0e0' }, // Black-Gray-White
+      { bgStart: '#e3f2fd', bgEnd: '#bbdefb', tabBg: '#42a5f5', tabHover: '#2196f3', thBg: '#90caf9', h1Color: '#1976d2', sidebarH2: '#1976d2', bannerBg: '#e1f5fe', footerBg: '#bbdefb', footerText: '#1976d2' }, // Blue
+      { bgStart: '#ffccbc', bgEnd: '#ffab91', tabBg: '#ff8a65', tabHover: '#ff7043', thBg: '#ffab91', h1Color: '#e64a19', sidebarH2: '#e64a19', bannerBg: '#ffccbc', footerBg: '#ffab91', footerText: '#e64a19' }, // Orange
+      { bgStart: '#b2dfdb', bgEnd: '#80cbc4', tabBg: '#4db6ac', tabHover: '#26a69a', thBg: '#80cbc4', h1Color: '#00695c', sidebarH2: '#00695c', bannerBg: '#b2dfdb', footerBg: '#80cbc4', footerText: '#00695c' }, // Teal
+      { bgStart: '#d1c4e9', bgEnd: '#b39ddb', tabBg: '#9575cd', tabHover: '#7e57c2', thBg: '#b39ddb', h1Color: '#5e35b1', sidebarH2: '#5e35b1', bannerBg: '#d1c4e9', footerBg: '#b39ddb', footerText: '#5e35b1' }, // Purple
+      { bgStart: '#f5f5f5', bgEnd: '#eceff1', tabBg: '#b0bec5', tabHover: '#90a4ae', thBg: '#cfd8dc', h1Color: '#455a64', sidebarH2: '#455a64', bannerBg: '#f5f5f5', footerBg: '#eceff1', footerText: '#455a64' } // Pastel
+    ];
 
     const sortOptions = {
       waifu: [
@@ -487,6 +550,7 @@
       merchandise: ""
     };
 
+    // Show the form corresponding to the active tab
     function showForm(tab) {
       document.querySelectorAll('.form-section').forEach(section => {
         section.classList.remove('active');
@@ -494,6 +558,7 @@
       document.getElementById(`${tab}-form`).classList.add('active');
     }
 
+    // Load data for the selected tab via AJAX
     function loadData(tab) {
       currentTab = tab;
       showForm(tab);
@@ -520,6 +585,7 @@
         });
     }
 
+    // Add Waifu via fetch
     function addWaifu() {
       const waifu = {
         name: document.getElementById('waifuName').value.trim(),
@@ -553,6 +619,7 @@
         });
     }
 
+    // Delete Waifu via fetch
     function deleteWaifu() {
       const identifier = document.getElementById('waifuIdentifier').value.trim();
 
@@ -946,17 +1013,19 @@
         });
     }
 
-    // Image banner rotation
+    // Image banner rotation logic
     const images = document.querySelectorAll('#image-banner img');
     let currentImageIndex = 0;
     let rotationInterval;
 
+    // Rotate to the next image in the banner
     function rotateImages() {
       images[currentImageIndex].classList.remove('active');
       currentImageIndex = (currentImageIndex + 1) % images.length;
       images[currentImageIndex].classList.add('active');
     }
 
+    // Randomly select a new image (different from the current one)
     function gambleImage() {
       images[currentImageIndex].classList.remove('active');
       let newIndex;
@@ -968,19 +1037,57 @@
       startRotation();
     }
 
+    // Start or restart the automatic rotation interval
     function startRotation() {
       clearInterval(rotationInterval);
       rotationInterval = setInterval(rotateImages, 10000);
     }
 
+    // Skip to the next image and reset the rotation interval
     function skipImage() {
       rotateImages();
       startRotation();
     }
 
+    // Change the theme based on the selected index
+    function changeTheme(index) {
+      themeIndex = parseInt(index);
+      const theme = themes[themeIndex];
+      document.body.style.setProperty('--bg-start', theme.bgStart);
+      document.body.style.setProperty('--bg-end', theme.bgEnd);
+      document.body.style.setProperty('--tab-bg', theme.tabBg);
+      document.body.style.setProperty('--tab-hover', theme.tabHover);
+      document.body.style.setProperty('--th-bg', theme.thBg);
+      document.body.style.setProperty('--h1-color', theme.h1Color);
+      document.body.style.setProperty('--sidebar-h2', theme.sidebarH2);
+      document.body.style.setProperty('--banner-bg', theme.bannerBg);
+      document.body.style.setProperty('--footer-bg', theme.footerBg);
+      document.body.style.setProperty('--footer-text', theme.footerText);
+
+      // Update button styles dynamically
+      document.querySelectorAll('.tabs button').forEach(btn => {
+        btn.style.background = theme.tabBg;
+        btn.onmouseover = () => btn.style.background = theme.tabHover;
+        btn.onmouseout = () => btn.style.background = theme.tabBg;
+      });
+      document.querySelectorAll('.sidebar button').forEach(btn => {
+        btn.style.background = theme.tabBg;
+        btn.onmouseover = () => btn.style.background = theme.tabHover;
+        btn.onmouseout = () => btn.style.background = theme.tabBg;
+      });
+      document.querySelector('.next-button').style.background = theme.tabBg;
+      document.querySelector('.next-button').onmouseover = () => document.querySelector('.next-button').style.background = theme.tabHover;
+      document.querySelector('.next-button').onmouseout = () => document.querySelector('.next-button').style.background = theme.tabBg;
+      document.querySelector('.gamble-button').style.background = theme.tabBg;
+      document.querySelector('.gamble-button').onmouseover = () => document.querySelector('.gamble-button').style.background = theme.tabHover;
+      document.querySelector('.gamble-button').onmouseout = () => document.querySelector('.gamble-button').style.background = theme.tabBg;
+    }
+
+    // Initialize the first image and start rotation
     images[currentImageIndex].classList.add('active');
     startRotation();
 
+    // Set up event listeners on page load
     window.onload = () => {
       searchInput = document.getElementById("searchInput");
       sortSelect = document.getElementById("sortSelect");
