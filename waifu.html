@@ -206,6 +206,12 @@
         <input type="text" id="mediaStudio" />
         <button type="button" onclick="addMedia()">Add Media</button>
       </form>
+      <h2>Delete Media</h2>
+      <form id="delete-media-form">
+        <label for="mediaIdentifier">Media ID or Title</label>
+        <input type="text" id="mediaIdentifier" required />
+        <button type="button" onclick="deleteMedia()">Delete Media</button>
+      </form>
     </div>
     <div id="studio-form" class="form-section">
       <h2>Add Studio</h2>
@@ -218,6 +224,12 @@
         <input type="number" id="studioFoundedYear" />
         <button type="button" onclick="addStudio()">Add Studio</button>
       </form>
+      <h2>Delete Studio</h2>
+      <form id="delete-studio-form">
+        <label for="studioIdentifier">Studio ID or Name</label>
+        <input type="text" id="studioIdentifier" required />
+        <button type="button" onclick="deleteStudio()">Delete Studio</button>
+      </form>
     </div>
     <div id="voice-form" class="form-section">
       <h2>Add Voice Actor</h2>
@@ -229,6 +241,12 @@
         <label for="voiceAgency">Agency</label>
         <input type="text" id="voiceAgency" />
         <button type="button" onclick="addVoiceActor()">Add Voice Actor</button>
+      </form>
+      <h2>Delete Voice Actor</h2>
+      <form id="delete-voice-form">
+        <label for="voiceIdentifier">Voice Actor ID or Name</label>
+        <input type="text" id="voiceIdentifier" required />
+        <button type="button" onclick="deleteVoiceActor()">Delete Voice Actor</button>
       </form>
     </div>
     <div id="fandom-form" class="form-section">
@@ -244,6 +262,12 @@
         <input type="text" id="fandomPlatform" />
         <button type="button" onclick="addFandom()">Add Fandom</button>
       </form>
+      <h2>Delete Fandom</h2>
+      <form id="delete-fandom-form">
+        <label for="fandomIdentifier">Fandom ID or Fan Club Name</label>
+        <input type="text" id="fandomIdentifier" required />
+        <button type="button" onclick="deleteFandom()">Delete Fandom</button>
+      </form>
     </div>
     <div id="abilities-form" class="form-section">
       <h2>Add Ability</h2>
@@ -258,6 +282,12 @@
         <input type="text" id="abilityType" />
         <button type="button" onclick="addAbility()">Add Ability</button>
       </form>
+      <h2>Delete Ability</h2>
+      <form id="delete-abilities-form">
+        <label for="abilityIdentifier">Ability ID or Name</label>
+        <input type="text" id="abilityIdentifier" required />
+        <button type="button" onclick="deleteAbility()">Delete Ability</button>
+      </form>
     </div>
     <div id="events-form" class="form-section">
       <h2>Add Event</h2>
@@ -269,6 +299,12 @@
         <label for="eventDate">Date</label>
         <input type="date" id="eventDate" />
         <button type="button" onclick="addEvent()">Add Event</button>
+      </form>
+      <h2>Delete Event</h2>
+      <form id="delete-events-form">
+        <label for="eventIdentifier">Event ID or Name</label>
+        <input type="text" id="eventIdentifier" required />
+        <button type="button" onclick="deleteEvent()">Delete Event</button>
       </form>
     </div>
     <div id="merchandise-form" class="form-section">
@@ -285,6 +321,12 @@
         <label for="merchReleaseDate">Release Date</label>
         <input type="date" id="merchReleaseDate" />
         <button type="button" onclick="addMerchandise()">Add Merchandise</button>
+      </form>
+      <h2>Delete Merchandise</h2>
+      <form id="delete-merchandise-form">
+        <label for="merchIdentifier">Merchandise ID or Name</label>
+        <input type="text" id="merchIdentifier" required />
+        <button type="button" onclick="deleteMerchandise()">Delete Merchandise</button>
       </form>
     </div>
   </div>
@@ -416,14 +458,14 @@
 
     function addWaifu() {
       const waifu = {
-        name: document.getElementById('waifuName').value,
-        origin: document.getElementById('waifuOrigin').value,
-        personality: document.getElementById('waifuPersonality').value,
-        appearance: document.getElementById('waifuAppearance').value,
+        name: document.getElementById('waifuName').value.trim(),
+        origin: document.getElementById('waifuOrigin').value.trim(),
+        personality: document.getElementById('waifuPersonality').value.trim(),
+        appearance: document.getElementById('waifuAppearance').value.trim(),
         popularity: document.getElementById('waifuPopularity').value,
-        media: document.getElementById('waifuMedia').value,
-        voiceActor: document.getElementById('waifuVoiceActor').value,
-        imageURL: document.getElementById('waifuImage').value
+        media: document.getElementById('waifuMedia').value.trim(),
+        voiceActor: document.getElementById('waifuVoiceActor').value.trim(),
+        imageURL: document.getElementById('waifuImage').value.trim()
       };
 
       fetch('add_waifu.php', {
@@ -448,7 +490,7 @@
     }
 
     function deleteWaifu() {
-      const identifier = document.getElementById('waifuIdentifier').value;
+      const identifier = document.getElementById('waifuIdentifier').value.trim();
 
       fetch('delete_waifu.php', {
         method: 'POST',
@@ -473,10 +515,10 @@
 
     function addMedia() {
       const media = {
-        title: document.getElementById('mediaTitle').value,
-        type: document.getElementById('mediaType').value,
+        title: document.getElementById('mediaTitle').value.trim(),
+        type: document.getElementById('mediaType').value.trim(),
         releaseYear: document.getElementById('mediaReleaseYear').value,
-        studioID: document.getElementById('mediaStudio').value
+        studioID: document.getElementById('mediaStudio').value.trim()
       };
 
       fetch('add_media.php', {
@@ -500,10 +542,34 @@
         });
     }
 
+    function deleteMedia() {
+      const identifier = document.getElementById('mediaIdentifier').value.trim();
+
+      fetch('delete_media.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Media deleted successfully!');
+            loadData('media');
+            document.getElementById('delete-media-form').reset();
+          } else {
+            alert('Error deleting media: ' + data.message);
+          }
+        })
+        .catch(err => {
+          alert('Error deleting media.');
+          console.error(err);
+        });
+    }
+
     function addStudio() {
       const studio = {
-        name: document.getElementById('studioName').value,
-        location: document.getElementById('studioLocation').value,
+        name: document.getElementById('studioName').value.trim(),
+        location: document.getElementById('studioLocation').value.trim(),
         foundedYear: document.getElementById('studioFoundedYear').value
       };
 
@@ -528,11 +594,35 @@
         });
     }
 
+    function deleteStudio() {
+      const identifier = document.getElementById('studioIdentifier').value.trim();
+
+      fetch('delete_studio.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Studio deleted successfully!');
+            loadData('studio');
+            document.getElementById('delete-studio-form').reset();
+          } else {
+            alert('Error deleting studio: ' + data.message);
+          }
+        })
+        .catch(err => {
+          alert('Error deleting studio.');
+          console.error(err);
+        });
+    }
+
     function addVoiceActor() {
       const voiceActor = {
-        name: document.getElementById('voiceName').value,
-        nationality: document.getElementById('voiceNationality').value,
-        agency: document.getElementById('voiceAgency').value
+        name: document.getElementById('voiceName').value.trim(),
+        nationality: document.getElementById('voiceNationality').value.trim(),
+        agency: document.getElementById('voiceAgency').value.trim()
       };
 
       fetch('add_voiceactor.php', {
@@ -556,12 +646,36 @@
         });
     }
 
+    function deleteVoiceActor() {
+      const identifier = document.getElementById('voiceIdentifier').value.trim();
+
+      fetch('delete_voiceactor.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Voice Actor deleted successfully!');
+            loadData('voice');
+            document.getElementById('delete-voice-form').reset();
+          } else {
+            alert('Error deleting voice actor: ' + data.message);
+          }
+        })
+        .catch(err => {
+          alert('Error deleting voice actor.');
+          console.error(err);
+        });
+    }
+
     function addFandom() {
       const fandom = {
-        waifuID: document.getElementById('fandomWaifuID').value,
-        fanClubName: document.getElementById('fandomFanClubName').value,
+        waifuID: document.getElementById('fandomWaifuID').value.trim(),
+        fanClubName: document.getElementById('fandomFanClubName').value.trim(),
         memberCount: document.getElementById('fandomMemberCount').value,
-        platform: document.getElementById('fandomPlatform').value
+        platform: document.getElementById('fandomPlatform').value.trim()
       };
 
       fetch('add_fandom.php', {
@@ -585,12 +699,36 @@
         });
     }
 
+    function deleteFandom() {
+      const identifier = document.getElementById('fandomIdentifier').value.trim();
+
+      fetch('delete_fandom.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Fandom deleted successfully!');
+            loadData('fandom');
+            document.getElementById('delete-fandom-form').reset();
+          } else {
+            alert('Error deleting fandom: ' + data.message);
+          }
+        })
+        .catch(err => {
+          alert('Error deleting fandom.');
+          console.error(err);
+        });
+    }
+
     function addAbility() {
       const ability = {
-        waifuID: document.getElementById('abilityWaifuID').value,
-        name: document.getElementById('abilityName').value,
-        description: document.getElementById('abilityDescription').value,
-        type: document.getElementById('abilityType').value
+        waifuID: document.getElementById('abilityWaifuID').value.trim(),
+        name: document.getElementById('abilityName').value.trim(),
+        description: document.getElementById('abilityDescription').value.trim(),
+        type: document.getElementById('abilityType').value.trim()
       };
 
       fetch('add_ability.php', {
@@ -614,10 +752,34 @@
         });
     }
 
+    function deleteAbility() {
+      const identifier = document.getElementById('abilityIdentifier').value.trim();
+
+      fetch('delete_ability.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Ability deleted successfully!');
+            loadData('abilities');
+            document.getElementById('delete-abilities-form').reset();
+          } else {
+            alert('Error deleting ability: ' + data.message);
+          }
+        })
+        .catch(err => {
+          alert('Error deleting ability.');
+          console.error(err);
+        });
+    }
+
     function addEvent() {
       const event = {
-        name: document.getElementById('eventName').value,
-        location: document.getElementById('eventLocation').value,
+        name: document.getElementById('eventName').value.trim(),
+        location: document.getElementById('eventLocation').value.trim(),
         date: document.getElementById('eventDate').value
       };
 
@@ -642,11 +804,35 @@
         });
     }
 
+    function deleteEvent() {
+      const identifier = document.getElementById('eventIdentifier').value.trim();
+
+      fetch('delete_event.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Event deleted successfully!');
+            loadData('events');
+            document.getElementById('delete-events-form').reset();
+          } else {
+            alert('Error deleting event: ' + data.message);
+          }
+        })
+        .catch(err => {
+          alert('Error deleting event.');
+          console.error(err);
+        });
+    }
+
     function addMerchandise() {
       const merchandise = {
-        waifuID: document.getElementById('merchWaifuID').value,
-        name: document.getElementById('merchName').value,
-        type: document.getElementById('merchType').value,
+        waifuID: document.getElementById('merchWaifuID').value.trim(),
+        name: document.getElementById('merchName').value.trim(),
+        type: document.getElementById('merchType').value.trim(),
         price: document.getElementById('merchPrice').value,
         releaseDate: document.getElementById('merchReleaseDate').value
       };
@@ -668,6 +854,30 @@
         })
         .catch(err => {
           alert('Error adding merchandise.');
+          console.error(err);
+        });
+    }
+
+    function deleteMerchandise() {
+      const identifier = document.getElementById('merchIdentifier').value.trim();
+
+      fetch('delete_merchandise.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Merchandise deleted successfully!');
+            loadData('merchandise');
+            document.getElementById('delete-merchandise-form').reset();
+          } else {
+            alert('Error deleting merchandise: ' + data.message);
+          }
+        })
+        .catch(err => {
+          alert('Error deleting merchandise.');
           console.error(err);
         });
     }
