@@ -103,6 +103,8 @@
       border-radius: 6px;
       object-fit: cover;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      width: 50px;
+      height: 50px;
     }
 
     .sidebar {
@@ -151,35 +153,139 @@
     .main-content {
       flex: 1;
     }
+
+    .form-section {
+      display: none;
+    }
+
+    .form-section.active {
+      display: block;
+    }
   </style>
 </head>
 <body>
   <div class="sidebar">
-    <h2>Add Waifu</h2>
-    <div>
-      <label for="waifuName">Name</label>
-      <input type="text" id="waifuName" required />
-      <label for="waifuOrigin">Origin</label>
-      <input type="text" id="waifuOrigin" required />
-      <label for="waifuPersonality">Personality</label>
-      <textarea id="waifuPersonality" required></textarea>
-      <label for="waifuAppearance">Appearance</label>
-      <textarea id="waifuAppearance" required></textarea>
-      <label for="waifuPopularity">Popularity</label>
-      <input type="number" id="waifuPopularity" min="0" max="10" step="0.1" required />
-      <label for="waifuMedia">Media</label>
-      <input type="text" id="waifuMedia" />
-      <label for="waifuVoiceActor">Voice Actor</label>
-      <input type="text" id="waifuVoiceActor" />
-      <label for="waifuImage">Image URL</label>
-      <input type="url" id="waifuImage" required />
-      <button onclick="addWaifu()">Add Waifu</button>
+    <div id="waifu-form" class="form-section active">
+      <h2>Add Waifu</h2>
+      <form id="add-waifu-form">
+        <label for="waifuName">Name</label>
+        <input type="text" id="waifuName" required />
+        <label for="waifuOrigin">Origin</label>
+        <input type="text" id="waifuOrigin" required />
+        <label for="waifuPersonality">Personality</label>
+        <textarea id="waifuPersonality" required></textarea>
+        <label for="waifuAppearance">Appearance</label>
+        <textarea id="waifuAppearance" required></textarea>
+        <label for="waifuPopularity">Popularity</label>
+        <input type="number" id="waifuPopularity" min="0" max="10" step="0.1" required />
+        <label for="waifuMedia">Media</label>
+        <input type="text" id="waifuMedia" />
+        <label for="waifuVoiceActor">Voice Actor</label>
+        <input type="text" id="waifuVoiceActor" />
+        <label for="waifuImage">Image URL</label>
+        <input type="url" id="waifuImage" required />
+        <button type="button" onclick="addWaifu()">Add Waifu</button>
+      </form>
+      <h2>Delete Waifu</h2>
+      <form id="delete-waifu-form">
+        <label for="waifuIdentifier">Waifu ID or Name</label>
+        <input type="text" id="waifuIdentifier" required />
+        <button type="button" onclick="deleteWaifu()">Delete Waifu</button>
+      </form>
     </div>
-    <h2>Delete Waifu</h2>
-    <div>
-      <label for="waifuIdentifier">Waifu ID or Name</label>
-      <input type="text" id="waifuIdentifier" required />
-      <button onclick="deleteWaifu()">Delete Waifu</button>
+    <div id="media-form" class="form-section">
+      <h2>Add Media</h2>
+      <form id="add-media-form">
+        <label for="mediaTitle">Title</label>
+        <input type="text" id="mediaTitle" required />
+        <label for="mediaType">Type</label>
+        <input type="text" id="mediaType" />
+        <label for="mediaReleaseYear">Release Year</label>
+        <input type="number" id="mediaReleaseYear" />
+        <label for="mediaStudio">Studio ID</label>
+        <input type="text" id="mediaStudio" />
+        <button type="button" onclick="addMedia()">Add Media</button>
+      </form>
+    </div>
+    <div id="studio-form" class="form-section">
+      <h2>Add Studio</h2>
+      <form id="add-studio-form">
+        <label for="studioName">Name</label>
+        <input type="text" id="studioName" required />
+        <label for="studioLocation">Location</label>
+        <input type="text" id="studioLocation" />
+        <label for="studioFoundedYear">Founded Year</label>
+        <input type="number" id="studioFoundedYear" />
+        <button type="button" onclick="addStudio()">Add Studio</button>
+      </form>
+    </div>
+    <div id="voice-form" class="form-section">
+      <h2>Add Voice Actor</h2>
+      <form id="add-voice-form">
+        <label for="voiceName">Name</label>
+        <input type="text" id="voiceName" required />
+        <label for="voiceNationality">Nationality</label>
+        <input type="text" id="voiceNationality" />
+        <label for="voiceAgency">Agency</label>
+        <input type="text" id="voiceAgency" />
+        <button type="button" onclick="addVoiceActor()">Add Voice Actor</button>
+      </form>
+    </div>
+    <div id="fandom-form" class="form-section">
+      <h2>Add Fandom</h2>
+      <form id="add-fandom-form">
+        <label for="fandomWaifuID">Waifu ID</label>
+        <input type="text" id="fandomWaifuID" />
+        <label for="fandomFanClubName">Fan Club Name</label>
+        <input type="text" id="fandomFanClubName" required />
+        <label for="fandomMemberCount">Member Count</label>
+        <input type="number" id="fandomMemberCount" />
+        <label for="fandomPlatform">Platform</label>
+        <input type="text" id="fandomPlatform" />
+        <button type="button" onclick="addFandom()">Add Fandom</button>
+      </form>
+    </div>
+    <div id="abilities-form" class="form-section">
+      <h2>Add Ability</h2>
+      <form id="add-abilities-form">
+        <label for="abilityWaifuID">Waifu ID</label>
+        <input type="text" id="abilityWaifuID" />
+        <label for="abilityName">Name</label>
+        <input type="text" id="abilityName" required />
+        <label for="abilityDescription">Description</label>
+        <textarea id="abilityDescription"></textarea>
+        <label for="abilityType">Type</label>
+        <input type="text" id="abilityType" />
+        <button type="button" onclick="addAbility()">Add Ability</button>
+      </form>
+    </div>
+    <div id="events-form" class="form-section">
+      <h2>Add Event</h2>
+      <form id="add-events-form">
+        <label for="eventName">Name</label>
+        <input type="text" id="eventName" required />
+        <label for="eventLocation">Location</label>
+        <input type="text" id="eventLocation" />
+        <label for="eventDate">Date</label>
+        <input type="date" id="eventDate" />
+        <button type="button" onclick="addEvent()">Add Event</button>
+      </form>
+    </div>
+    <div id="merchandise-form" class="form-section">
+      <h2>Add Merchandise</h2>
+      <form id="add-merchandise-form">
+        <label for="merchWaifuID">Waifu ID</label>
+        <input type="text" id="merchWaifuID" />
+        <label for="merchName">Name</label>
+        <input type="text" id="merchName" required />
+        <label for="merchType">Type</label>
+        <input type="text" id="merchType" />
+        <label for="merchPrice">Price</label>
+        <input type="number" id="merchPrice" step="0.01" />
+        <label for="merchReleaseDate">Release Date</label>
+        <input type="date" id="merchReleaseDate" />
+        <button type="button" onclick="addMerchandise()">Add Merchandise</button>
+      </form>
     </div>
   </div>
 
@@ -219,6 +325,7 @@
 
   <script>
     let currentTab = 'waifu';
+    let searchInput, sortSelect;
 
     const sortOptions = {
       waifu: [
@@ -274,8 +381,16 @@
       merchandise: ""
     };
 
+    function showForm(tab) {
+      document.querySelectorAll('.form-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(`${tab}-form`).classList.add('active');
+    }
+
     function loadData(tab) {
       currentTab = tab;
+      showForm(tab);
       const search = searchInput.value;
       const sort = sortPerTab[tab];
 
@@ -321,7 +436,7 @@
           if (data.status === 'success') {
             alert('Waifu added successfully!');
             loadData('waifu');
-            document.querySelector('.sidebar form').reset();
+            document.getElementById('add-waifu-form').reset();
           } else {
             alert('Error adding waifu: ' + data.message);
           }
@@ -345,7 +460,7 @@
           if (data.status === 'success') {
             alert('Waifu deleted successfully!');
             loadData('waifu');
-            document.getElementById('waifuIdentifier').value = '';
+            document.getElementById('delete-waifu-form').reset();
           } else {
             alert('Error deleting waifu: ' + data.message);
           }
@@ -356,12 +471,212 @@
         });
     }
 
+    function addMedia() {
+      const media = {
+        title: document.getElementById('mediaTitle').value,
+        type: document.getElementById('mediaType').value,
+        releaseYear: document.getElementById('mediaReleaseYear').value,
+        studioID: document.getElementById('mediaStudio').value
+      };
+
+      fetch('add_media.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(media)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Media added successfully!');
+            loadData('media');
+            document.getElementById('add-media-form').reset();
+          } else {
+            alert('Error adding media: ' + data.message);
+          }
+        })
+        .catch(err => {
+          alert('Error adding media.');
+          console.error(err);
+        });
+    }
+
+    function addStudio() {
+      const studio = {
+        name: document.getElementById('studioName').value,
+        location: document.getElementById('studioLocation').value,
+        foundedYear: document.getElementById('studioFoundedYear').value
+      };
+
+      fetch('add_studio.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(studio)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Studio added successfully!');
+            loadData('studio');
+            document.getElementById('add-studio-form').reset();
+          } else {
+            alert('Error adding studio: ' + data.message);
+          }
+        })
+        .catch(err => {
+          alert('Error adding studio.');
+          console.error(err);
+        });
+    }
+
+    function addVoiceActor() {
+      const voiceActor = {
+        name: document.getElementById('voiceName').value,
+        nationality: document.getElementById('voiceNationality').value,
+        agency: document.getElementById('voiceAgency').value
+      };
+
+      fetch('add_voiceactor.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(voiceActor)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Voice Actor added successfully!');
+            loadData('voice');
+            document.getElementById('add-voice-form').reset();
+          } else {
+            alert('Error adding voice actor: ' + data.message);
+          }
+        })
+        .catch(err => {
+          alert('Error adding voice actor.');
+          console.error(err);
+        });
+    }
+
+    function addFandom() {
+      const fandom = {
+        waifuID: document.getElementById('fandomWaifuID').value,
+        fanClubName: document.getElementById('fandomFanClubName').value,
+        memberCount: document.getElementById('fandomMemberCount').value,
+        platform: document.getElementById('fandomPlatform').value
+      };
+
+      fetch('add_fandom.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(fandom)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Fandom added successfully!');
+            loadData('fandom');
+            document.getElementById('add-fandom-form').reset();
+          } else {
+            alert('Error adding fandom: ' + data.message);
+          }
+        })
+        .catch(err => {
+          alert('Error adding fandom.');
+          console.error(err);
+        });
+    }
+
+    function addAbility() {
+      const ability = {
+        waifuID: document.getElementById('abilityWaifuID').value,
+        name: document.getElementById('abilityName').value,
+        description: document.getElementById('abilityDescription').value,
+        type: document.getElementById('abilityType').value
+      };
+
+      fetch('add_ability.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(ability)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Ability added successfully!');
+            loadData('abilities');
+            document.getElementById('add-abilities-form').reset();
+          } else {
+            alert('Error adding ability: ' + data.message);
+          }
+        })
+        .catch(err => {
+          alert('Error adding ability.');
+          console.error(err);
+        });
+    }
+
+    function addEvent() {
+      const event = {
+        name: document.getElementById('eventName').value,
+        location: document.getElementById('eventLocation').value,
+        date: document.getElementById('eventDate').value
+      };
+
+      fetch('add_event.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(event)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Event added successfully!');
+            loadData('events');
+            document.getElementById('add-events-form').reset();
+          } else {
+            alert('Error adding event: ' + data.message);
+          }
+        })
+        .catch(err => {
+          alert('Error adding event.');
+          console.error(err);
+        });
+    }
+
+    function addMerchandise() {
+      const merchandise = {
+        waifuID: document.getElementById('merchWaifuID').value,
+        name: document.getElementById('merchName').value,
+        type: document.getElementById('merchType').value,
+        price: document.getElementById('merchPrice').value,
+        releaseDate: document.getElementById('merchReleaseDate').value
+      };
+
+      fetch('add_merchandise.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(merchandise)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Merchandise added successfully!');
+            loadData('merchandise');
+            document.getElementById('add-merchandise-form').reset();
+          } else {
+            alert('Error adding merchandise: ' + data.message);
+          }
+        })
+        .catch(err => {
+          alert('Error adding merchandise.');
+          console.error(err);
+        });
+    }
+
     window.onload = () => {
       searchInput = document.getElementById("searchInput");
       sortSelect = document.getElementById("sortSelect");
 
       searchInput.addEventListener("input", () => loadData(currentTab));
-
       sortSelect.addEventListener("change", () => {
         sortPerTab[currentTab] = sortSelect.value;
         loadData(currentTab);
@@ -369,12 +684,11 @@
 
       document.querySelectorAll(".tabs button").forEach(button => {
         button.addEventListener("click", () => {
-          const tab = button.dataset.tab;
-          loadData(tab);
+          loadData(button.dataset.tab);
         });
       });
 
-      loadData(currentTab);
+      loadData('waifu');
     };
   </script>
 </body>
