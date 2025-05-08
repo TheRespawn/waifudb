@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Waifu Database</title>
+  <link rel="icon" type="image/x-icon" href="icon.ico">
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -84,7 +85,7 @@
     }
 
     tr:hover {
-      background: #fff0f5;
+      background: var(--hover-bg, #fff0f5);
     }
 
     td img {
@@ -190,6 +191,15 @@
       background: var(--tab-hover, #ff66a3);
     }
 
+    .banner-text {
+      width: 100%;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 0.5rem;
+      max-width: 300px;
+    }
+
     footer {
       background-color: var(--footer-bg, #fce4ec);
       padding: 1.5rem;
@@ -211,6 +221,29 @@
       text-decoration: underline;
     }
 
+    .footer-links {
+      display: flex;
+      justify-content: space-around;
+      max-width: 600px;
+      margin: 0 auto 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links div {
+      margin: 0 1rem;
+    }
+
+    .footer-links a {
+      display: block;
+      color: var(--footer-text, #555);
+      text-decoration: none;
+      margin: 0.5rem 0;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
     .form-section {
       display: none;
     }
@@ -223,7 +256,7 @@
       position: absolute;
       top: 1rem;
       right: 1rem;
-      background: #fff;
+      background: var(--tab-bg, #ff99cc);
       border: 1px solid #ccc;
       border-radius: 8px;
       padding: 0.5rem;
@@ -231,15 +264,16 @@
     }
 
     .theme-menu select {
-      background: #fff;
+      background: var(--tab-bg, #ff99cc);
       border: none;
       font-size: 1rem;
+      color: white;
       cursor: pointer;
       padding: 0.25rem;
     }
 
     .theme-menu select:hover {
-      background: #f0f0f0;
+      background: var(--tab-hover, #ff66a3);
     }
   </style>
 </head>
@@ -466,9 +500,28 @@
     </div>
     <button class="next-button" onclick="skipImage()">Next</button>
     <button class="gamble-button" onclick="gambleImage()">Gamble</button>
+    <div class="banner-text">There are hot Waifus in your area waiting for you</div>
   </div>
 
   <footer>
+    <div class="footer-links">
+      <div>
+        <a href="#">LEGAL</a>
+        <a href="#">Content Removal</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">FAQ</a>
+      </div>
+      <div>
+        <a href="#">COMMUNITY</a>
+        <a href="#">Patreon</a>
+        <a href="#">Discord</a>
+      </div>
+      <div>
+        <a href="#">ABOUT</a>
+        <a href="#">About</a>
+      </div>
+    </div>
     <div class="impressum">
       <p>© 2025 Waifu Database. Alle Rechte vorbehalten.</p>
       <p><strong>Impressum:</strong> Sigma Rizzler, Diddystraße 69, 696969 Ohio<br>
@@ -483,17 +536,17 @@
 
     // Define all themes with their respective colors
     const themes = [
-      { bgStart: '#ffe0f0', bgEnd: '#f4f7fa', tabBg: '#ff99cc', tabHover: '#ff66a3', thBg: '#ffccdd', h1Color: '#ff66a3', sidebarH2: '#ff66a3', bannerBg: '#fff0f5', footerBg: '#fce4ec', footerText: '#555' }, // Pink
-      { bgStart: '#4a1e2e', bgEnd: '#2d1b24', tabBg: '#6b2d3a', tabHover: '#8a2e3b', thBg: '#7a3d4c', h1Color: '#ff4d6d', sidebarH2: '#ff4d6d', bannerBg: '#3a1e2a', footerBg: '#2d1b24', footerText: '#e0e0e0' }, // Red-Purple
-      { bgStart: '#d4e4d2', bgEnd: '#e6f0e6', tabBg: '#81c784', tabHover: '#66bb6a', thBg: '#a5d6a7', h1Color: '#2e7d32', sidebarH2: '#2e7d32', bannerBg: '#e0f0e0', footerBg: '#c8e6c9', footerText: '#2e7d32' }, // Green
-      { bgStart: '#fff9e6', bgEnd: '#fff3cc', tabBg: '#ffca28', tabHover: '#ffb300', thBg: '#ffe082', h1Color: '#f57f17', sidebarH2: '#f57f17', bannerBg: '#fffde7', footerBg: '#fff9e6', footerText: '#f57f17' }, // Yellow
-      { bgStart: '#ffebee', bgEnd: '#ffcdd2', tabBg: '#ef5350', tabHover: '#e53935', thBg: '#ef9a9a', h1Color: '#c62828', sidebarH2: '#c62828', bannerBg: '#ffebee', footerBg: '#ffcdd2', footerText: '#c62828' }, // Red
-      { bgStart: '#212121', bgEnd: '#bdbdbd', tabBg: '#616161', tabHover: '#424242', thBg: '#757575', h1Color: '#ffffff', sidebarH2: '#e0e0e0', bannerBg: '#424242', footerBg: '#212121', footerText: '#e0e0e0' }, // Black-Gray-White
-      { bgStart: '#e3f2fd', bgEnd: '#bbdefb', tabBg: '#42a5f5', tabHover: '#2196f3', thBg: '#90caf9', h1Color: '#1976d2', sidebarH2: '#1976d2', bannerBg: '#e1f5fe', footerBg: '#bbdefb', footerText: '#1976d2' }, // Blue
-      { bgStart: '#ffccbc', bgEnd: '#ffab91', tabBg: '#ff8a65', tabHover: '#ff7043', thBg: '#ffab91', h1Color: '#e64a19', sidebarH2: '#e64a19', bannerBg: '#ffccbc', footerBg: '#ffab91', footerText: '#e64a19' }, // Orange
-      { bgStart: '#b2dfdb', bgEnd: '#80cbc4', tabBg: '#4db6ac', tabHover: '#26a69a', thBg: '#80cbc4', h1Color: '#00695c', sidebarH2: '#00695c', bannerBg: '#b2dfdb', footerBg: '#80cbc4', footerText: '#00695c' }, // Teal
-      { bgStart: '#d1c4e9', bgEnd: '#b39ddb', tabBg: '#9575cd', tabHover: '#7e57c2', thBg: '#b39ddb', h1Color: '#5e35b1', sidebarH2: '#5e35b1', bannerBg: '#d1c4e9', footerBg: '#b39ddb', footerText: '#5e35b1' }, // Purple
-      { bgStart: '#f5f5f5', bgEnd: '#eceff1', tabBg: '#b0bec5', tabHover: '#90a4ae', thBg: '#cfd8dc', h1Color: '#455a64', sidebarH2: '#455a64', bannerBg: '#f5f5f5', footerBg: '#eceff1', footerText: '#455a64' } // Pastel
+      { bgStart: '#ffe0f0', bgEnd: '#f4f7fa', tabBg: '#ff99cc', tabHover: '#ff66a3', thBg: '#ffccdd', h1Color: '#ff66a3', sidebarH2: '#ff66a3', bannerBg: '#fff0f5', footerBg: '#fce4ec', footerText: '#555', hoverBg: '#fff0f5' }, // Pink
+      { bgStart: '#4a1e2e', bgEnd: '#2d1b24', tabBg: '#6b2d3a', tabHover: '#8a2e3b', thBg: '#7a3d4c', h1Color: '#ff4d6d', sidebarH2: '#ff4d6d', bannerBg: '#3a1e2a', footerBg: '#2d1b24', footerText: '#e0e0e0', hoverBg: '#3a2d3a' }, // Red-Purple
+      { bgStart: '#d4e4d2', bgEnd: '#e6f0e6', tabBg: '#81c784', tabHover: '#66bb6a', thBg: '#a5d6a7', h1Color: '#2e7d32', sidebarH2: '#2e7d32', bannerBg: '#e0f0e0', footerBg: '#c8e6c9', footerText: '#2e7d32', hoverBg: '#d0e0d0' }, // Green
+      { bgStart: '#fff9e6', bgEnd: '#fff3cc', tabBg: '#ffca28', tabHover: '#ffb300', thBg: '#ffe082', h1Color: '#f57f17', sidebarH2: '#f57f17', bannerBg: '#fffde7', footerBg: '#fff9e6', footerText: '#f57f17', hoverBg: '#fff0d0' }, // Yellow
+      { bgStart: '#ffebee', bgEnd: '#ffcdd2', tabBg: '#ef5350', tabHover: '#e53935', thBg: '#ef9a9a', h1Color: '#c62828', sidebarH2: '#c62828', bannerBg: '#ffebee', footerBg: '#ffcdd2', footerText: '#c62828', hoverBg: '#ffd0d0' }, // Red
+      { bgStart: '#212121', bgEnd: '#bdbdbd', tabBg: '#616161', tabHover: '#424242', thBg: '#757575', h1Color: '#ffffff', sidebarH2: '#a0a0a0', bannerBg: '#424242', footerBg: '#212121', footerText: '#e0e0e0', hoverBg: '#4a4a4a' }, // Black-Gray-White
+      { bgStart: '#e3f2fd', bgEnd: '#bbdefb', tabBg: '#42a5f5', tabHover: '#2196f3', thBg: '#90caf9', h1Color: '#1976d2', sidebarH2: '#1976d2', bannerBg: '#e1f5fe', footerBg: '#bbdefb', footerText: '#1976d2', hoverBg: '#cce0ff' }, // Blue
+      { bgStart: '#ffccbc', bgEnd: '#ffab91', tabBg: '#ff8a65', tabHover: '#ff7043', thBg: '#ffab91', h1Color: '#e64a19', sidebarH2: '#e64a19', bannerBg: '#ffccbc', footerBg: '#ffab91', footerText: '#e64a19', hoverBg: '#ffccbc' }, // Orange
+      { bgStart: '#b2dfdb', bgEnd: '#80cbc4', tabBg: '#4db6ac', tabHover: '#26a69a', thBg: '#80cbc4', h1Color: '#00695c', sidebarH2: '#00695c', bannerBg: '#b2dfdb', footerBg: '#80cbc4', footerText: '#00695c', hoverBg: '#a0d0cc' }, // Teal
+      { bgStart: '#d1c4e9', bgEnd: '#b39ddb', tabBg: '#9575cd', tabHover: '#7e57c2', thBg: '#b39ddb', h1Color: '#5e35b1', sidebarH2: '#5e35b1', bannerBg: '#d1c4e9', footerBg: '#b39ddb', footerText: '#5e35b1', hoverBg: '#c0b0e0' }, // Purple
+      { bgStart: '#f5f5f5', bgEnd: '#eceff1', tabBg: '#b0bec5', tabHover: '#90a4ae', thBg: '#cfd8dc', h1Color: '#455a64', sidebarH2: '#455a64', bannerBg: '#f5f5f5', footerBg: '#eceff1', footerText: '#455a64', hoverBg: '#e0e0e0' } // Pastel
     ];
 
     const sortOptions = {
@@ -550,7 +603,6 @@
       merchandise: ""
     };
 
-    // Show the form corresponding to the active tab
     function showForm(tab) {
       document.querySelectorAll('.form-section').forEach(section => {
         section.classList.remove('active');
@@ -558,7 +610,6 @@
       document.getElementById(`${tab}-form`).classList.add('active');
     }
 
-    // Load data for the selected tab via AJAX
     function loadData(tab) {
       currentTab = tab;
       showForm(tab);
@@ -585,7 +636,6 @@
         });
     }
 
-    // Add Waifu via fetch
     function addWaifu() {
       const waifu = {
         name: document.getElementById('waifuName').value.trim(),
@@ -619,7 +669,6 @@
         });
     }
 
-    // Delete Waifu via fetch
     function deleteWaifu() {
       const identifier = document.getElementById('waifuIdentifier').value.trim();
 
@@ -1013,19 +1062,16 @@
         });
     }
 
-    // Image banner rotation logic
     const images = document.querySelectorAll('#image-banner img');
     let currentImageIndex = 0;
     let rotationInterval;
 
-    // Rotate to the next image in the banner
     function rotateImages() {
       images[currentImageIndex].classList.remove('active');
       currentImageIndex = (currentImageIndex + 1) % images.length;
       images[currentImageIndex].classList.add('active');
     }
 
-    // Randomly select a new image (different from the current one)
     function gambleImage() {
       images[currentImageIndex].classList.remove('active');
       let newIndex;
@@ -1037,19 +1083,16 @@
       startRotation();
     }
 
-    // Start or restart the automatic rotation interval
     function startRotation() {
       clearInterval(rotationInterval);
       rotationInterval = setInterval(rotateImages, 10000);
     }
 
-    // Skip to the next image and reset the rotation interval
     function skipImage() {
       rotateImages();
       startRotation();
     }
 
-    // Change the theme based on the selected index
     function changeTheme(index) {
       themeIndex = parseInt(index);
       const theme = themes[themeIndex];
@@ -1063,8 +1106,12 @@
       document.body.style.setProperty('--banner-bg', theme.bannerBg);
       document.body.style.setProperty('--footer-bg', theme.footerBg);
       document.body.style.setProperty('--footer-text', theme.footerText);
+      document.body.style.setProperty('--hover-bg', theme.hoverBg);
 
-      // Update button styles dynamically
+      document.querySelector('.theme-menu').style.background = theme.tabBg;
+      document.querySelector('.theme-menu select').style.background = theme.tabBg;
+      document.querySelector('.theme-menu select').style.color = '#fff';
+
       document.querySelectorAll('.tabs button').forEach(btn => {
         btn.style.background = theme.tabBg;
         btn.onmouseover = () => btn.style.background = theme.tabHover;
@@ -1083,11 +1130,9 @@
       document.querySelector('.gamble-button').onmouseout = () => document.querySelector('.gamble-button').style.background = theme.tabBg;
     }
 
-    // Initialize the first image and start rotation
     images[currentImageIndex].classList.add('active');
     startRotation();
 
-    // Set up event listeners on page load
     window.onload = () => {
       searchInput = document.getElementById("searchInput");
       sortSelect = document.getElementById("sortSelect");
