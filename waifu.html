@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Waifu Database</title>
+  <style>
+    footer {
+      background-color: #fce4ec;
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 3rem;
+      border-top: 1px solid #ddd;
+    }
+
+    footer a {
+      color: #d81b60;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #ffe0f0, #f4f7fa);
+      margin: 0;
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff66a3;
+      margin-bottom: 1rem;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
+      gap: 1rem;
+    }
+
+    .tabs button {
+      background: #ff99cc;
+      border: none;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .tabs button:hover {
+      background: #ff66a3;
+    }
+
+    .search-bar {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .search-bar input {
+      padding: 0.6rem;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .results {
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    table {
+      width: 100%;
+      background: white;
+      border-collapse: collapse;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+    }
+
+    th {
+      background: #ffccdd;
+    }
+
+    tr:hover {
+      background: #fff0f5;
+    }
+    td img {
+      border-radius: 6px;
+      object-fit: cover;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Waifu Database</h1>
+
+  <div class="tabs">
+    <button data-tab="waifu">Waifus</button>
+    <button data-tab="media">Media</button>
+    <button data-tab="studio">Studios</button>
+    <button data-tab="voice">Voice Actors</button>
+    <button data-tab="fandom">Fandom</button>
+    <button data-tab="abilities">Abilities</button>
+    <button data-tab="events">Events</button>
+    <button data-tab="merchandise">Merchandise</button>
+  </div>
+  
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search..." />
+    
+    <select id="sortSelect">
+      <!-- Filled dynamically -->
+    </select>    
+  </div>
+
+  <div class="results" id="results">
+    <!-- AJAX-injected content here -->
+  </div>
+  <script>
+    let currentTab = 'waifu';
+
+    const sortOptions = {
+      waifu: [
+      { value: "", text: "Sort by..." },
+      { value: "popularity_desc", text: "Popularity ↓" },
+      { value: "popularity_asc", text: "Popularity ↑" }
+    ],
+    media: [
+      { value: "", text: "Sort by..." },
+      { value: "release_desc", text: "Release Year ↓" },
+      { value: "release_asc", text: "Release Year ↑" }
+    ],
+    studio: [
+      { value: "", text: "Sort by..." },
+      { value: "founded_desc", text: "Founded Year ↓" },
+      { value: "founded_asc", text: "Founded Year ↑" }
+    ],
+    voice: [
+        { value: "", text: "Sort by..." }
+      ],
+      fandom: [
+        { value: "", text: "Sort by..." },
+        { value: "members_desc", text: "Members ↓" },
+        { value: "members_asc", text: "Members ↑" }
+      ],
+      abilities: [
+        { value: "", text: "Sort by..." },
+        { value: "type", text: "Type" },
+        { value: "name", text: "Name" }
+      ],
+      events: [
+        { value: "", text: "Sort by..." },
+        { value: "date_desc", text: "Date ↓" },
+        { value: "date_asc", text: "Date ↑" }
+      ],
+      merchandise: [
+        { value: "", text: "Sort by..." },
+        { value: "price_desc", text: "Price ↓" },
+        { value: "price_asc", text: "Price ↑" },
+        { value: "release_desc", text: "Release Date ↓" },
+        { value: "release_asc", text: "Release Date ↑" }
+      ]
+    };
+
+
+    let sortPerTab = {
+      waifu: "",
+      media: "",
+      studio: "",
+      voice: "",
+      fandom: "",
+      abilities: "",
+      events: "",
+      merchandise: ""
+    };
+
+
+    function loadData(tab) {
+      currentTab = tab;
+
+      const search = searchInput.value;
+      const sort = sortPerTab[tab];
+
+      // Update dropdown
+      sortSelect.innerHTML = "";
+      sortOptions[tab].forEach(opt => {
+        const option = document.createElement("option");
+        option.value = opt.value;
+        option.textContent = opt.text;
+        if (opt.value === sort) option.selected = true;
+        sortSelect.appendChild(option);
+      });
+
+      fetch(`${tab}.php?search=${encodeURIComponent(search)}&sort=${sort}`)
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById("results").innerHTML = html;
+        })
+        .catch(err => {
+          document.getElementById("results").innerHTML = "<p style='color:red;'>Error loading data.</p>";
+          console.error(err);
+        });
+    }
+
+    window.onload = () => {
+      searchInput = document.getElementById("searchInput");
+      sortSelect = document.getElementById("sortSelect");
+
+      // Handle search
+      searchInput.addEventListener("input", () => loadData(currentTab));
+
+      // ✅ Handle sort selection and update value
+      sortSelect.addEventListener("change", () => {
+        sortPerTab[currentTab] = sortSelect.value;
+        loadData(currentTab);
+      });
+
+      // Handle tab switching
+      document.querySelectorAll(".tabs button").forEach(button => {
+        button.addEventListener("click", () => {
+          const tab = button.dataset.tab;
+          loadData(tab);
+        });
+      });
+
+      loadData(currentTab);
+    };
+
+
+  </script>
+  
+  <footer>
+    <div class="impressum">
+      <p>© 2025 Waifu Database. Alle Rechte vorbehalten.</p>
+      <p><strong>Impressum:</strong> Sigma Rizzler, Diddystraße 69, 696969 Ohio<br>
+      E-Mail: <a href="mailto:sigma@fortnite.de">sigma@fortnite.de</a></p>
+    </div>
+  </footer>  
+  </body>
+  </html>
