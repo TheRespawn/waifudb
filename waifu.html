@@ -4,31 +4,15 @@
   <meta charset="UTF-8" />
   <title>Waifu Database</title>
   <style>
-    footer {
-      background-color: #fce4ec;
-      padding: 1.5rem;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #555;
-      margin-top: 3rem;
-      border-top: 1px solid #ddd;
-    }
-
-    footer a {
-      color: #d81b60;
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
     body {
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(to bottom right, #ffe0f0, #f4f7fa);
       margin: 0;
       padding: 2rem;
       display: flex;
+      flex-wrap: wrap;
+      min-height: 100vh;
+      flex-direction: row;
     }
 
     h1 {
@@ -152,8 +136,72 @@
 
     .main-content {
       flex: 1;
+      max-width: 1000px;
+    }
+    .banner-container {
+      width: 300px;
+      margin-left: 2rem;
+      text-align: center;
     }
 
+    .next-button, .gamble-button {
+      background: #ff99cc;
+      border: none;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 1rem;
+    }
+
+    .next-button:hover, .gamble-button:hover {
+      background: #ff66a3;
+    }
+    #image-banner {
+      width: 100%;
+      height: 600px;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      background-color: #fff0f5;
+      box-sizing: border-box;
+    }
+
+
+    #image-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: none;
+      transition: opacity 0.5s ease-in-out;
+    }
+    #image-banner img.active {
+      display: block;
+      opacity: 1;
+    }
+
+    footer {
+      background-color: #fce4ec;
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+      width: 100%;
+      position: relative;
+      margin-top: auto;
+      border-top: 1px solid #ddd;
+    }
+
+    footer a {
+      color: #d81b60;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
     .form-section {
       display: none;
     }
@@ -357,11 +405,27 @@
     </div>
   </div>
 
+  <div class="banner-container">
+    <div id="image-banner">
+      <img src="images/waifu1.jpg" alt="Waifu Character 1">
+      <img src="images/waifu2.png" alt="Waifu Character 2">
+      <img src="images/waifu3.png" alt="Waifu Character 3">
+      <img src="images/waifu4.jpg" alt="Waifu Character 4">
+      <img src="images/waifu5.webp" alt="Waifu Character 5">
+      <img src="images/waifu6.webp" alt="Waifu Character 6">
+      <img src="images/waifu7.webp" alt="Waifu Character 7">
+      <img src="images/waifu8.png" alt="Waifu Character 8">
+      <img src="images/waifu9.webp" alt="Waifu Character 9">
+    </div>
+    <button class="next-button" onclick="skipImage()">Next</button>
+    <button class="gamble-button" onclick="gambleImage()">Always Gamble</button>
+  </div>
+
   <footer>
     <div class="impressum">
       <p>© 2025 Waifu Database. Alle Rechte vorbehalten.</p>
       <p><strong>Impressum:</strong> Sigma Rizzler, Diddystraße 69, 696969 Ohio<br>
-      E-Mail: <a href="mailto:sigma@fortnite.de">sigma@fortnite.de"></a></p>
+      E-Mail: <a href="mailto:sigma@fortnite.de">sigma@fortnite.de</a></p>
     </div>
   </footer>
 
@@ -881,6 +945,41 @@
           console.error(err);
         });
     }
+
+    // Image banner rotation
+    const images = document.querySelectorAll('#image-banner img');
+    let currentImageIndex = 0;
+    let rotationInterval;
+
+    function rotateImages() {
+      images[currentImageIndex].classList.remove('active');
+      currentImageIndex = (currentImageIndex + 1) % images.length;
+      images[currentImageIndex].classList.add('active');
+    }
+
+    function gambleImage() {
+      images[currentImageIndex].classList.remove('active');
+      let newIndex;
+      do {
+        newIndex = Math.floor(Math.random() * images.length);
+      } while (newIndex === currentImageIndex);
+      currentImageIndex = newIndex;
+      images[currentImageIndex].classList.add('active');
+      startRotation();
+    }
+
+    function startRotation() {
+      clearInterval(rotationInterval);
+      rotationInterval = setInterval(rotateImages, 10000);
+    }
+
+    function skipImage() {
+      rotateImages();
+      startRotation();
+    }
+
+    images[currentImageIndex].classList.add('active');
+    startRotation();
 
     window.onload = () => {
       searchInput = document.getElementById("searchInput");
