@@ -6,19 +6,16 @@ include 'connect.php';
 $search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
 $sort = $_GET['sort'] ?? '';
 
-// Base query
 $sql = "
     SELECT m.MediaID, m.Title, m.Type, m.ReleaseYear, s.Name AS StudioName
     FROM Media m
     LEFT JOIN Studio s ON m.StudioID = s.StudioID
 ";
 
-// Search
 if ($search !== '') {
     $sql .= " WHERE m.Title LIKE '%$search%' OR s.Name LIKE '%$search%' OR m.Type LIKE '%$search%'";
 }
 
-// Sort
 switch ($sort) {
     case 'release_asc':
         $sql .= " ORDER BY m.ReleaseYear ASC";
@@ -33,7 +30,15 @@ switch ($sort) {
 
 $result = $conn->query($sql);
 
-// Output table
+if (isset($_GET['json'])) {
+    $data = [];
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
+    }
+    echo json_encode($data);
+    exit;
+}
+
 echo "<table>
 <thead>
     <tr>

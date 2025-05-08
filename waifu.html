@@ -28,6 +28,7 @@
       background: linear-gradient(to bottom right, #ffe0f0, #f4f7fa);
       margin: 0;
       padding: 2rem;
+      display: flex;
     }
 
     h1 {
@@ -97,58 +98,145 @@
     tr:hover {
       background: #fff0f5;
     }
+
     td img {
       border-radius: 6px;
       object-fit: cover;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
+
+    .sidebar {
+      width: 300px;
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-right: 2rem;
+    }
+
+    .sidebar h2 {
+      color: #ff66a3;
+      margin-top: 0;
+    }
+
+    .sidebar label {
+      display: block;
+      margin: 0.5rem 0 0.2rem;
+      color: #555;
+    }
+
+    .sidebar input, .sidebar textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar button {
+      background: #ff99cc;
+      border: none;
+      color: white;
+      padding: 0.75rem;
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .sidebar button:hover {
+      background: #ff66a3;
+    }
+
+    .main-content {
+      flex: 1;
+    }
   </style>
 </head>
 <body>
-  <h1>Waifu Database</h1>
+  <div class="sidebar">
+    <h2>Add Waifu</h2>
+    <div>
+      <label for="waifuName">Name</label>
+      <input type="text" id="waifuName" required />
+      <label for="waifuOrigin">Origin</label>
+      <input type="text" id="waifuOrigin" required />
+      <label for="waifuPersonality">Personality</label>
+      <textarea id="waifuPersonality" required></textarea>
+      <label for="waifuAppearance">Appearance</label>
+      <textarea id="waifuAppearance" required></textarea>
+      <label for="waifuPopularity">Popularity</label>
+      <input type="number" id="waifuPopularity" min="0" max="10" step="0.1" required />
+      <label for="waifuMedia">Media</label>
+      <input type="text" id="waifuMedia" />
+      <label for="waifuVoiceActor">Voice Actor</label>
+      <input type="text" id="waifuVoiceActor" />
+      <label for="waifuImage">Image URL</label>
+      <input type="url" id="waifuImage" required />
+      <button onclick="addWaifu()">Add Waifu</button>
+    </div>
+    <h2>Delete Waifu</h2>
+    <div>
+      <label for="waifuIdentifier">Waifu ID or Name</label>
+      <input type="text" id="waifuIdentifier" required />
+      <button onclick="deleteWaifu()">Delete Waifu</button>
+    </div>
+  </div>
 
-  <div class="tabs">
-    <button data-tab="waifu">Waifus</button>
-    <button data-tab="media">Media</button>
-    <button data-tab="studio">Studios</button>
-    <button data-tab="voice">Voice Actors</button>
-    <button data-tab="fandom">Fandom</button>
-    <button data-tab="abilities">Abilities</button>
-    <button data-tab="events">Events</button>
-    <button data-tab="merchandise">Merchandise</button>
-  </div>
-  
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search..." />
-    
-    <select id="sortSelect">
-      <!-- Filled dynamically -->
-    </select>    
+  <div class="main-content">
+    <h1>Waifu Database</h1>
+
+    <div class="tabs">
+      <button data-tab="waifu">Waifus</button>
+      <button data-tab="media">Media</button>
+      <button data-tab="studio">Studios</button>
+      <button data-tab="voice">Voice Actors</button>
+      <button data-tab="fandom">Fandom</button>
+      <button data-tab="abilities">Abilities</button>
+      <button data-tab="events">Events</button>
+      <button data-tab="merchandise">Merchandise</button>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search..." />
+      <select id="sortSelect">
+        <!-- Filled dynamically -->
+      </select>
+    </div>
+
+    <div class="results" id="results">
+      <!-- AJAX-injected content here -->
+    </div>
   </div>
 
-  <div class="results" id="results">
-    <!-- AJAX-injected content here -->
-  </div>
+  <footer>
+    <div class="impressum">
+      <p>© 2025 Waifu Database. Alle Rechte vorbehalten.</p>
+      <p><strong>Impressum:</strong> Sigma Rizzler, Diddystraße 69, 696969 Ohio<br>
+      E-Mail: <a href="mailto:sigma@fortnite.de">sigma@fortnite.de"></a></p>
+    </div>
+  </footer>
+
   <script>
     let currentTab = 'waifu';
 
     const sortOptions = {
       waifu: [
-      { value: "", text: "Sort by..." },
-      { value: "popularity_desc", text: "Popularity ↓" },
-      { value: "popularity_asc", text: "Popularity ↑" }
-    ],
-    media: [
-      { value: "", text: "Sort by..." },
-      { value: "release_desc", text: "Release Year ↓" },
-      { value: "release_asc", text: "Release Year ↑" }
-    ],
-    studio: [
-      { value: "", text: "Sort by..." },
-      { value: "founded_desc", text: "Founded Year ↓" },
-      { value: "founded_asc", text: "Founded Year ↑" }
-    ],
-    voice: [
+        { value: "", text: "Sort by..." },
+        { value: "popularity_desc", text: "Popularity ↓" },
+        { value: "popularity_asc", text: "Popularity ↑" }
+      ],
+      media: [
+        { value: "", text: "Sort by..." },
+        { value: "release_desc", text: "Release Year ↓" },
+        { value: "release_asc", text: "Release Year ↑" }
+      ],
+      studio: [
+        { value: "", text: "Sort by..." },
+        { value: "founded_desc", text: "Founded Year ↓" },
+        { value: "founded_asc", text: "Founded Year ↑" }
+      ],
+      voice: [
         { value: "", text: "Sort by..." }
       ],
       fandom: [
@@ -175,7 +263,6 @@
       ]
     };
 
-
     let sortPerTab = {
       waifu: "",
       media: "",
@@ -187,14 +274,11 @@
       merchandise: ""
     };
 
-
     function loadData(tab) {
       currentTab = tab;
-
       const search = searchInput.value;
       const sort = sortPerTab[tab];
 
-      // Update dropdown
       sortSelect.innerHTML = "";
       sortOptions[tab].forEach(opt => {
         const option = document.createElement("option");
@@ -215,20 +299,74 @@
         });
     }
 
+    function addWaifu() {
+      const waifu = {
+        name: document.getElementById('waifuName').value,
+        origin: document.getElementById('waifuOrigin').value,
+        personality: document.getElementById('waifuPersonality').value,
+        appearance: document.getElementById('waifuAppearance').value,
+        popularity: document.getElementById('waifuPopularity').value,
+        media: document.getElementById('waifuMedia').value,
+        voiceActor: document.getElementById('waifuVoiceActor').value,
+        imageURL: document.getElementById('waifuImage').value
+      };
+
+      fetch('add_waifu.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(waifu)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Waifu added successfully!');
+            loadData('waifu');
+            document.querySelector('.sidebar form').reset();
+          } else {
+            alert('Error adding waifu: ' + data.message);
+          }
+        })
+        .catch(err => {
+          alert('Error adding waifu.');
+          console.error(err);
+        });
+    }
+
+    function deleteWaifu() {
+      const identifier = document.getElementById('waifuIdentifier').value;
+
+      fetch('delete_waifu.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Waifu deleted successfully!');
+            loadData('waifu');
+            document.getElementById('waifuIdentifier').value = '';
+          } else {
+            alert('Error deleting waifu: ' + data.message);
+          }
+        })
+        .catch(err => {
+          alert('Error deleting waifu.');
+          console.error(err);
+        });
+    }
+
     window.onload = () => {
       searchInput = document.getElementById("searchInput");
       sortSelect = document.getElementById("sortSelect");
 
-      // Handle search
       searchInput.addEventListener("input", () => loadData(currentTab));
 
-      // ✅ Handle sort selection and update value
       sortSelect.addEventListener("change", () => {
         sortPerTab[currentTab] = sortSelect.value;
         loadData(currentTab);
       });
 
-      // Handle tab switching
       document.querySelectorAll(".tabs button").forEach(button => {
         button.addEventListener("click", () => {
           const tab = button.dataset.tab;
@@ -238,16 +376,6 @@
 
       loadData(currentTab);
     };
-
-
   </script>
-  
-  <footer>
-    <div class="impressum">
-      <p>© 2025 Waifu Database. Alle Rechte vorbehalten.</p>
-      <p><strong>Impressum:</strong> Sigma Rizzler, Diddystraße 69, 696969 Ohio<br>
-      E-Mail: <a href="mailto:sigma@fortnite.de">sigma@fortnite.de</a></p>
-    </div>
-  </footer>  
-  </body>
-  </html>
+</body>
+</html>
