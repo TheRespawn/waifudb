@@ -114,6 +114,41 @@
       display: block;
     }
 
+    .main-page {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .main-page .waifu-card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 1rem;
+      text-align: center;
+      width: 200px;
+    }
+
+    .main-page .waifu-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .main-page .waifu-card h3 {
+      color: var(--h1-color, #ff66a3);
+      margin: 0.5rem 0 0.2rem;
+      font-size: 1.2rem;
+    }
+
+    .main-page .waifu-card p {
+      color: #555;
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
     .sidebar {
       width: 300px;
       background: #fff;
@@ -586,11 +621,16 @@
       <h2>Waifu of the Day</h2>
       <p>No actions available for this tab.</p>
     </div>
+    <div id="main-form" class="form-section">
+      <h2>Main Page</h2>
+      <p>No actions available for this tab.</p>
+    </div>
   </div>
 
   <div class="main-content">
     <h1>Waifu Database</h1>
     <div class="tabs">
+      <button data-tab="main">Main</button>
       <button data-tab="waifu">Waifus</button>
       <button data-tab="media">Media</button>
       <button data-tab="studio">Studios</button>
@@ -665,7 +705,7 @@
   </footer>
 
   <script>
-    let currentTab = 'waifu';
+    let currentTab = 'main';
     let searchInput, sortSelect;
     let themeIndex = 0;
     let waifuMode = 'add';
@@ -685,6 +725,12 @@
     ];
 
     const sortOptions = {
+      main: [
+        { value: "id_asc", text: "ID ↑" },
+        { value: "id_desc", text: "ID ↓" },
+        { value: "name_asc", text: "Name A-Z" },
+        { value: "name_desc", text: "Name Z-A" }
+      ],
       waifu: [
         { value: "id_asc", text: "ID ↑" },
         { value: "id_desc", text: "ID ↓" },
@@ -732,6 +778,7 @@
     };
 
     let sortPerTab = {
+      main: "id_asc",
       waifu: "id_asc",
       media: "id_asc",
       studio: "id_asc",
@@ -780,7 +827,7 @@
 
       const url = (tab === 'waifu-of-the-day')
         ? `/api/waifu-of-the-day.php`
-        : `/api/${tab}.php?search=${encodeURIComponent(search)}&sort=${sort}`;
+        : `/api/${tab === 'main' ? 'waifu' : tab}.php?search=${encodeURIComponent(search)}&sort=${sort}`;
 
       fetch(url, { cache: 'no-store' })
         .then(res => {
@@ -798,6 +845,26 @@
               waifuOfTheDayImage.style.display = 'block';
             }
             if (currentTab === 'waifu-of-the-day') resultsDiv.innerHTML = tempDiv.innerHTML;
+          } else if (tab === 'main') {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const rows = doc.querySelectorAll('tbody tr');
+            let mainHtml = '<div class="main-page">';
+            rows.forEach(row => {
+              const cells = row.querySelectorAll('td');
+              const name = cells[1].textContent;
+              const origin = cells[2].textContent;
+              const imgSrc = cells[8].querySelector('img') ? cells[8].querySelector('img').src : '';
+              mainHtml += `
+                <div class="waifu-card">
+                  <img src="${imgSrc}" alt="${name}">
+                  <h3>${name}</h3>
+                  <p>${origin}</p>
+                </div>
+              `;
+            });
+            mainHtml += '</div>';
+            resultsDiv.innerHTML = mainHtml;
           } else {
             resultsDiv.innerHTML = html;
           }
@@ -873,6 +940,101 @@
           console.error(err);
         });
     }
+
+    function toggleWaifuMode(mode) {
+      waifuMode = mode;
+      const waifuIdInput = document.getElementById('waifu-id-input');
+      const addWaifuSection = document.getElementById('add-waifu-section');
+      const waifuSubmitButton = document.getElementById('waifuSubmitButton');
+      const formTitle = addWaifuSection.querySelector('h2');
+
+      // Remove any existing Abort button in both modes
+      let existingAbort = addWaifuSection.querySelector('button[onclick="abortChange()"]');
+      if (existingAbort) addWaifuSection.removeChild(existingAbort);
+
+      if (mode === 'update') {
+        waifuIdInput.style.display = 'block';
+        addWaifuSection.style.display = 'none';
+        formTitle.textContent = 'Change Waifu';
+        waifuSubmitButton.textContent = 'Update Waifu';
+        waifuSubmitButton.onclick = updateWaifu;
+      } else {
+        waifuIdInput.style.display = 'none';
+        addWaifuSection.style.display = 'block';
+        formTitle.textContent = 'Add Waifu';
+        waifuSubmitButton.textContent = 'Add Waifu';
+        waifuSubmitButton.onclick = addWaifu;
+        document.getElementById('add-waifu-form').reset();
+      }
+    }
+
+    function fetchWaifuData() {
+      const waifuID = document.getElementById('waifuID').value;
+      if (!waifuID) {
+        alert('Please enter a Waifu ID.');
+        return;
+      }
+
+      fetch(`/api/waifu.php?search=${waifuID}&sort=id_asc`)
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+          return res.text();
+        })
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const row = doc.querySelector('tbody tr');
+
+          if (!row) {
+            alert('Waifu not found.');
+            return;
+          }
+
+          const cells = row.querySelectorAll('td');
+          if (cells.length < 9) {
+            alert('Incomplete waifu data returned.');
+            console.log('HTML Response:', html);
+            return;
+          }
+
+          document.getElementById('waifuName').value = cells[1].textContent || '';
+          document.getElementById('waifuOrigin').value = cells[2].textContent || '';
+          document.getElementById('waifuPersonality').value = cells[3].textContent || '';
+          document.getElementById('waifuAppearance').value = cells[4].textContent || '';
+          document.getElementById('waifuPopularity').value = cells[5].textContent || '';
+          document.getElementById('waifuMedia').value = cells[6].textContent === 'N/A' ? '' : cells[6].textContent;
+          document.getElementById('waifuVoiceActor').value = cells[7].textContent === 'N/A' ? '' : cells[7].textContent;
+          let imgSrc = cells[8].querySelector('img') ? cells[8].querySelector('img').src : '';
+          document.getElementById('waifuImage').value = imgSrc.replace(/^.*\/images\//, '') || '';
+
+          const addWaifuSection = document.getElementById('add-waifu-section');
+          document.getElementById('waifu-id-input').style.display = 'none';
+          addWaifuSection.style.display = 'block';
+
+          // Remove existing Abort button if present
+          let existingAbort = addWaifuSection.querySelector('button[onclick="abortChange()"]');
+          if (existingAbort) addWaifuSection.removeChild(existingAbort);
+
+          // Add Abort button after loading waifu data
+          let abortButton = document.createElement('button');
+          abortButton.type = 'button';
+          abortButton.textContent = 'Abort';
+          abortButton.setAttribute('onclick', 'abortChange()');
+          addWaifuSection.insertBefore(abortButton, addWaifuSection.querySelector('form'));
+        })
+        .catch(err => {
+          alert('Error fetching waifu data: ' + err.message);
+          console.error(err);
+        });
+    }
+
+    function abortChange() {
+      const addWaifuSection = document.getElementById('add-waifu-section');
+      let existingAbort = addWaifuSection.querySelector('button[onclick="abortChange()"]');
+      if (existingAbort) addWaifuSection.removeChild(existingAbort);
+      toggleWaifuMode('add');
+    }
+
     function addWaifu() {
       const waifu = {
         name: document.getElementById('waifuName').value.trim(),
@@ -1087,99 +1249,8 @@
       });
 
       loadData('waifu-of-the-day', true);
-      loadData('waifu');
+      loadData('main');
     };
-    function toggleWaifuMode(mode) {
-      waifuMode = mode;
-      const waifuIdInput = document.getElementById('waifu-id-input');
-      const addWaifuSection = document.getElementById('add-waifu-section');
-      const waifuSubmitButton = document.getElementById('waifuSubmitButton');
-      const formTitle = addWaifuSection.querySelector('h2');
-
-      // Remove any existing Abort button in both modes
-      let existingAbort = addWaifuSection.querySelector('button[onclick="abortChange()"]');
-      if (existingAbort) addWaifuSection.removeChild(existingAbort);
-
-      if (mode === 'update') {
-        waifuIdInput.style.display = 'block';
-        addWaifuSection.style.display = 'none';
-        formTitle.textContent = 'Change Waifu';
-        waifuSubmitButton.textContent = 'Update Waifu';
-        waifuSubmitButton.onclick = updateWaifu;
-      } else {
-        waifuIdInput.style.display = 'none';
-        addWaifuSection.style.display = 'block';
-        formTitle.textContent = 'Add Waifu';
-        waifuSubmitButton.textContent = 'Add Waifu';
-        waifuSubmitButton.onclick = addWaifu;
-        document.getElementById('add-waifu-form').reset();
-      }
-    }
-    function fetchWaifuData() {
-      const waifuID = document.getElementById('waifuID').value;
-      if (!waifuID) {
-        alert('Please enter a Waifu ID.');
-        return;
-      }
-
-      fetch(`/api/waifu.php?search=${waifuID}&sort=id_asc`)
-        .then(res => {
-          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-          return res.text();
-        })
-        .then(html => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, 'text/html');
-          const row = doc.querySelector('tbody tr');
-
-          if (!row) {
-            alert('Waifu not found.');
-            return;
-          }
-
-          const cells = row.querySelectorAll('td');
-          if (cells.length < 9) {
-            alert('Incomplete waifu data returned.');
-            console.log('HTML Response:', html);
-            return;
-          }
-
-          document.getElementById('waifuName').value = cells[1].textContent || '';
-          document.getElementById('waifuOrigin').value = cells[2].textContent || '';
-          document.getElementById('waifuPersonality').value = cells[3].textContent || '';
-          document.getElementById('waifuAppearance').value = cells[4].textContent || '';
-          document.getElementById('waifuPopularity').value = cells[5].textContent || '';
-          document.getElementById('waifuMedia').value = cells[6].textContent === 'N/A' ? '' : cells[6].textContent;
-          document.getElementById('waifuVoiceActor').value = cells[7].textContent === 'N/A' ? '' : cells[7].textContent;
-          let imgSrc = cells[8].querySelector('img') ? cells[8].querySelector('img').src : '';
-          document.getElementById('waifuImage').value = imgSrc.replace(/^.*\/images\//, '') || '';
-
-          const addWaifuSection = document.getElementById('add-waifu-section');
-          document.getElementById('waifu-id-input').style.display = 'none';
-          addWaifuSection.style.display = 'block';
-
-          // Remove existing Abort button if present
-          let existingAbort = addWaifuSection.querySelector('button[onclick="abortChange()"]');
-          if (existingAbort) addWaifuSection.removeChild(existingAbort);
-
-          // Add Abort button after loading waifu data
-          let abortButton = document.createElement('button');
-          abortButton.type = 'button';
-          abortButton.textContent = 'Abort';
-          abortButton.setAttribute('onclick', 'abortChange()'); // Ensure attribute matches selector
-          addWaifuSection.insertBefore(abortButton, addWaifuSection.querySelector('form'));
-        })
-        .catch(err => {
-          alert('Error fetching waifu data: ' + err.message);
-          console.error(err);
-        });
-    }
-    function abortChange() {
-      const addWaifuSection = document.getElementById('add-waifu-section');
-      let existingAbort = addWaifuSection.querySelector('button[onclick="abortChange()"]');
-      if (existingAbort) addWaifuSection.removeChild(existingAbort);
-      toggleWaifuMode('add');
-    }
   </script>
 </body>
 </html>
