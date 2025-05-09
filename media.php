@@ -17,6 +17,12 @@ if ($search !== '') {
 }
 
 switch ($sort) {
+    case 'id_asc':
+        $sql .= " ORDER BY m.MediaID ASC";
+        break;
+    case 'id_desc':
+        $sql .= " ORDER BY m.MediaID DESC";
+        break;
     case 'release_asc':
         $sql .= " ORDER BY m.ReleaseYear ASC";
         break;
@@ -24,7 +30,7 @@ switch ($sort) {
         $sql .= " ORDER BY m.ReleaseYear DESC";
         break;
     default:
-        $sql .= " ORDER BY m.Title ASC";
+        $sql .= " ORDER BY m.MediaID ASC";
         break;
 }
 

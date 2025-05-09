@@ -75,13 +75,14 @@
 
     .results table th {
       background: var(--th-bg, #ffccdd);
-      padding: 1rem;
+      color: var(--h1-color, #ff66a3);
+      padding: 0.5rem;
       border-bottom: 1px solid #eee;
       text-align: left;
     }
 
     .results table td {
-      padding: 1rem;
+      padding: 0.5rem;
       border-bottom: 1px solid #eee;
       text-align: left;
     }
@@ -102,6 +103,15 @@
       font-weight: bold;
       color: var(--h1-color, #ff66a3);
       margin: 0.5rem 0;
+    }
+
+    .results table td img.waifu-of-the-day-table-image {
+      max-width: 300px;
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      margin: 0 auto;
+      display: block;
     }
 
     .sidebar {
@@ -357,50 +367,10 @@
     .theme-menu select:hover {
       background: var(--tab-hover, #ff66a3);
     }
-
-    .waifu-of-the-day-title {
-      text-align: center;
-      font-size: 1.2rem;
-      color: var(--h1-color, #ff66a3);
-    }
-    .results table .waifu-of-the-day-table-image {
-      max-width: 300px;
-      height: auto;
-      border-radius: 6px;
-      margin: 0 auto;
-      display: block;
-    }
-
-    .results table th {
-      background: var(--th-bg, #ffccdd);
-      color: var(--h1-color, #ff66a3);
-      padding: 0.5rem;
-      text-align: left;
-    }
-
-    .results table td {
-      padding: 0.5rem;
-      text-align: left;
-    }
-    .results table td img.waifu-of-the-day-table-image {
-      max-width: 300px !important;
-      width: 100% !important; /* Ensure it scales up to the max-width */
-      height: auto !important;
-      border-radius: 6px;
-      margin: 0 auto;
-      display: block;
-    }
-
-    .results table td img {
-      border-radius: 6px;
-      object-fit: cover;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      width: 50px;
-      height: 50px;
-    }
   </style>
 </head>
 <body>
+  <!-- Theme selector dropdown -->
   <div class="theme-menu">
     <select onchange="changeTheme(this.value)">
       <option value="0">Pink</option>
@@ -416,6 +386,8 @@
       <option value="10">Pastel</option>
     </select>
   </div>
+
+  <!-- Sidebar with forms for adding/deleting entries -->
   <div class="sidebar">
     <div id="waifu-form" class="form-section active">
       <h2>Add Waifu</h2>
@@ -587,9 +559,9 @@
     </div>
   </div>
 
+  <!-- Main content area with tabs and results -->
   <div class="main-content">
     <h1>Waifu Database</h1>
-
     <div class="tabs">
       <button data-tab="waifu">Waifus</button>
       <button data-tab="media">Media</button>
@@ -600,19 +572,14 @@
       <button data-tab="events">Events</button>
       <button data-tab="merchandise">Merchandise</button>
     </div>
-
     <div class="search-bar">
       <input type="text" id="searchInput" placeholder="Search..." />
-      <select id="sortSelect">
-        <!-- Filled dynamically -->
-      </select>
+      <select id="sortSelect"></select>
     </div>
-
-    <div class="results" id="results">
-      <!-- AJAX-injected content here -->
-    </div>
+    <div class="results" id="results"></div>
   </div>
 
+  <!-- Banner with rotating images and Waifu of the Day -->
   <div class="banner-container">
     <div id="image-banner">
       <img src="images/waifu1.jpg" alt="Waifu Character 1">
@@ -635,6 +602,7 @@
     <img id="waifu-of-the-day-image" alt="Waifu of the Day">
   </div>
 
+  <!-- Community chat section -->
   <div class="chat-box">
     <h2>Community Chat</h2>
     <div class="chat-message"><strong>AnimeFan123:</strong> Just saw the new waifu of the day, she's amazing! 😍</div>
@@ -644,6 +612,7 @@
     <div class="chat-message"><strong>GamerSenpai:</strong> This database is the best, keep up the great work!</div>
   </div>
 
+  <!-- Footer with links and impressum -->
   <footer>
     <div class="footer-links">
       <div>
@@ -666,160 +635,207 @@
     <div class="impressum">
       <p>© 2025 Waifu Database. Alle Rechte vorbehalten.</p>
       <p><strong>Impressum:</strong> Sigma Rizzler, Diddystraße 69, 696969 Ohio<br>
-      E-Mail: <a href="mailto:sigma@fortnite.de">sigma@fortnite.de"></a></p>
+      E-Mail: <a href="mailto:sigma@fortnite.de">sigma@fortnite.de</a></p>
     </div>
   </footer>
 
   <script>
     let currentTab = 'waifu';
-let searchInput, sortSelect;
-let themeIndex = 0;
+    let searchInput, sortSelect;
+    let themeIndex = 0;
 
-const themes = [
-    { bgStart: '#ffe0f0', bgEnd: '#f4f7fa', tabBg: '#ff99cc', tabHover: '#ff66a3', thBg: '#ffccdd', h1Color: '#ff66a3', sidebarH2: '#ff66a3', bannerBg: '#fff0f5', footerBg: '#fce4ec', footerText: '#555', hoverBg: '#fff0f5', chatBg: 'rgba(255, 153, 204, 0.5)' }, // Pink
-    { bgStart: '#4a1e2e', bgEnd: '#2d1b24', tabBg: '#6b2d3a', tabHover: '#8a2e3b', thBg: '#7a3d4c', h1Color: '#ff4d6d', sidebarH2: '#ff4d6d', bannerBg: '#3a1e2a', footerBg: '#2d1b24', footerText: '#e0e0e0', hoverBg: '#3a2d3a', chatBg: 'rgba(107, 45, 58, 0.5)' }, // Red-Purple
-    { bgStart: '#d4e4d2', bgEnd: '#e6f0e6', tabBg: '#81c784', tabHover: '#66bb6a', thBg: '#a5d6a7', h1Color: '#2e7d32', sidebarH2: '#2e7d32', bannerBg: '#e0f0e0', footerBg: '#c8e6c9', footerText: '#2e7d32', hoverBg: '#d0e0d0', chatBg: 'rgba(129, 199, 132, 0.5)' }, // Green
-    { bgStart: '#fff9e6', bgEnd: '#fff3cc', tabBg: '#ffca28', tabHover: '#ffb300', thBg: '#ffe082', h1Color: '#f57f17', sidebarH2: '#f57f17', bannerBg: '#fffde7', footerBg: '#fff9e6', footerText: '#f57f17', hoverBg: '#fff0d0', chatBg: 'rgba(255, 202, 40, 0.5)' }, // Yellow
-    { bgStart: '#ffebee', bgEnd: '#ffcdd2', tabBg: '#ef5350', tabHover: '#e53935', thBg: '#ef9a9a', h1Color: '#c62828', sidebarH2: '#c62828', bannerBg: '#ffebee', footerBg: '#ffcdd2', footerText: '#c62828', hoverBg: '#ffd0d0', chatBg: 'rgba(239, 83, 80, 0.5)' }, // Red
-    { bgStart: '#212121', bgEnd: '#bdbdbd', tabBg: '#616161', tabHover: '#424242', thBg: '#757575', h1Color: '#ffffff', sidebarH2: '#a0a0a0', bannerBg: '#424242', footerBg: '#212121', footerText: '#e0e0e0', hoverBg: '#4a4a4a', chatBg: 'rgba(97, 97, 97, 0.5)' }, // Black-Gray-White
-    { bgStart: '#e3f2fd', bgEnd: '#bbdefb', tabBg: '#42a5f5', tabHover: '#2196f3', thBg: '#90caf9', h1Color: '#1976d2', sidebarH2: '#1976d2', bannerBg: '#e1f5fe', footerBg: '#bbdefb', footerText: '#1976d2', hoverBg: '#cce0ff', chatBg: 'rgba(66, 165, 245, 0.5)' }, // Blue
-    { bgStart: '#ffccbc', bgEnd: '#ffab91', tabBg: '#ff8a65', tabHover: '#ff7043', thBg: '#ffab91', h1Color: '#e64a19', sidebarH2: '#e64a19', bannerBg: '#ffccbc', footerBg: '#ffab91', footerText: '#e64a19', hoverBg: '#ffccbc', chatBg: 'rgba(255, 138, 101, 0.5)' }, // Orange
-    { bgStart: '#b2dfdb', bgEnd: '#80cbc4', tabBg: '#4db6ac', tabHover: '#26a69a', thBg: '#80cbc4', h1Color: '#00695c', sidebarH2: '#00695c', bannerBg: '#b2dfdb', footerBg: '#80cbc4', footerText: '#00695c', hoverBg: '#a0d0cc', chatBg: 'rgba(77, 182, 172, 0.5)' }, // Teal
-    { bgStart: '#d1c4e9', bgEnd: '#b39ddb', tabBg: '#9575cd', tabHover: '#7e57c2', thBg: '#b39ddb', h1Color: '#5e35b1', sidebarH2: '#5e35b1', bannerBg: '#d1c4e9', footerBg: '#b39ddb', footerText: '#5e35b1', hoverBg: '#c0b0e0', chatBg: 'rgba(149, 117, 205, 0.5)' }, // Purple
-    { bgStart: '#f5f5f5', bgEnd: '#eceff1', tabBg: '#b0bec5', tabHover: '#90a4ae', thBg: '#cfd8dc', h1Color: '#455a64', sidebarH2: '#455a64', bannerBg: '#f5f5f5', footerBg: '#eceff1', footerText: '#455a64', hoverBg: '#e0e0e0', chatBg: 'rgba(176, 190, 197, 0.5)' } // Pastel
-];
+    // Theme definitions
+    const themes = [
+      { bgStart: '#ffe0f0', bgEnd: '#f4f7fa', tabBg: '#ff99cc', tabHover: '#ff66a3', thBg: '#ffccdd', h1Color: '#ff66a3', sidebarH2: '#ff66a3', bannerBg: '#fff0f5', footerBg: '#fce4ec', footerText: '#555', hoverBg: '#fff0f5', chatBg: 'rgba(255, 153, 204, 0.5)' },
+      { bgStart: '#4a1e2e', bgEnd: '#2d1b24', tabBg: '#6b2d3a', tabHover: '#8a2e3b', thBg: '#7a3d4c', h1Color: '#ff4d6d', sidebarH2: '#ff4d6d', bannerBg: '#3a1e2a', footerBg: '#2d1b24', footerText: '#e0e0e0', hoverBg: '#3a2d3a', chatBg: 'rgba(107, 45, 58, 0.5)' },
+      { bgStart: '#d4e4d2', bgEnd: '#e6f0e6', tabBg: '#81c784', tabHover: '#66bb6a', thBg: '#a5d6a7', h1Color: '#2e7d32', sidebarH2: '#2e7d32', bannerBg: '#e0f0e0', footerBg: '#c8e6c9', footerText: '#2e7d32', hoverBg: '#d0e0d0', chatBg: 'rgba(129, 199, 132, 0.5)' },
+      { bgStart: '#fff9e6', bgEnd: '#fff3cc', tabBg: '#ffca28', tabHover: '#ffb300', thBg: '#ffe082', h1Color: '#f57f17', sidebarH2: '#f57f17', bannerBg: '#fffde7', footerBg: '#fff9e6', footerText: '#f57f17', hoverBg: '#fff0d0', chatBg: 'rgba(255, 202, 40, 0.5)' },
+      { bgStart: '#ffebee', bgEnd: '#ffcdd2', tabBg: '#ef5350', tabHover: '#e53935', thBg: '#ef9a9a', h1Color: '#c62828', sidebarH2: '#c62828', bannerBg: '#ffebee', footerBg: '#ffcdd2', footerText: '#c62828', hoverBg: '#ffd0d0', chatBg: 'rgba(239, 83, 80, 0.5)' },
+      { bgStart: '#212121', bgEnd: '#bdbdbd', tabBg: '#616161', tabHover: '#424242', thBg: '#757575', h1Color: '#ffffff', sidebarH2: '#a0a0a0', bannerBg: '#424242', footerBg: '#212121', footerText: '#e0e0e0', hoverBg: '#4a4a4a', chatBg: 'rgba(97, 97, 97, 0.5)' },
+      { bgStart: '#e3f2fd', bgEnd: '#bbdefb', tabBg: '#42a5f5', tabHover: '#2196f3', thBg: '#90caf9', h1Color: '#1976d2', sidebarH2: '#1976d2', bannerBg: '#e1f5fe', footerBg: '#bbdefb', footerText: '#1976d2', hoverBg: '#cce0ff', chatBg: 'rgba(66, 165, 245, 0.5)' },
+      { bgStart: '#ffccbc', bgEnd: '#ffab91', tabBg: '#ff8a65', tabHover: '#ff7043', thBg: '#ffab91', h1Color: '#e64a19', sidebarH2: '#e64a19', bannerBg: '#ffccbc', footerBg: '#ffab91', footerText: '#e64a19', hoverBg: '#ffccbc', chatBg: 'rgba(255, 138, 101, 0.5)' },
+      { bgStart: '#b2dfdb', bgEnd: '#80cbc4', tabBg: '#4db6ac', tabHover: '#26a69a', thBg: '#80cbc4', h1Color: '#00695c', sidebarH2: '#00695c', bannerBg: '#b2dfdb', footerBg: '#80cbc4', footerText: '#00695c', hoverBg: '#a0d0cc', chatBg: 'rgba(77, 182, 172, 0.5)' },
+      { bgStart: '#d1c4e9', bgEnd: '#b39ddb', tabBg: '#9575cd', tabHover: '#7e57c2', thBg: '#b39ddb', h1Color: '#5e35b1', sidebarH2: '#5e35b1', bannerBg: '#d1c4e9', footerBg: '#b39ddb', footerText: '#5e35b1', hoverBg: '#c0b0e0', chatBg: 'rgba(149, 117, 205, 0.5)' },
+      { bgStart: '#f5f5f5', bgEnd: '#eceff1', tabBg: '#b0bec5', tabHover: '#90a4ae', thBg: '#cfd8dc', h1Color: '#455a64', sidebarH2: '#455a64', bannerBg: '#f5f5f5', footerBg: '#eceff1', footerText: '#455a64', hoverBg: '#e0e0e0', chatBg: 'rgba(176, 190, 197, 0.5)' }
+    ];
 
-const sortOptions = {
-    waifu: [
-        { value: "", text: "Sort by..." },
+    // Sorting options for tabs that support sorting
+    const sortOptions = {
+      waifu: [
+        { value: "id_asc", text: "ID ↑" },
+        { value: "id_desc", text: "ID ↓" },
         { value: "popularity_desc", text: "Popularity ↓" },
         { value: "popularity_asc", text: "Popularity ↑" }
-    ],
-    media: [
-        { value: "", text: "Sort by..." },
+      ],
+      media: [
+        { value: "id_asc", text: "ID ↑" },
+        { value: "id_desc", text: "ID ↓" },
         { value: "release_desc", text: "Release Year ↓" },
         { value: "release_asc", text: "Release Year ↑" }
-    ],
-    studio: [
-        { value: "", text: "Sort by..." },
+      ],
+      studio: [
+        { value: "id_asc", text: "ID ↑" },
+        { value: "id_desc", text: "ID ↓" },
         { value: "founded_desc", text: "Founded Year ↓" },
         { value: "founded_asc", text: "Founded Year ↑" }
-    ],
-    voice: [
-        { value: "", text: "Sort by..." }
-    ],
-    fandom: [
-        { value: "", text: "Sort by..." },
+      ],
+      fandom: [
+        { value: "id_asc", text: "ID ↑" },
+        { value: "id_desc", text: "ID ↓" },
         { value: "members_desc", text: "Members ↓" },
         { value: "members_asc", text: "Members ↑" }
-    ],
-    abilities: [
-        { value: "", text: "Sort by..." },
+      ],
+      abilities: [
+        { value: "id_asc", text: "ID ↑" },
+        { value: "id_desc", text: "ID ↓" },
         { value: "type", text: "Type" },
         { value: "name", text: "Name" }
-    ],
-    events: [
-        { value: "", text: "Sort by..." },
+      ],
+      events: [
+        { value: "id_asc", text: "ID ↑" },
+        { value: "id_desc", text: "ID ↓" },
         { value: "date_desc", text: "Date ↓" },
         { value: "date_asc", text: "Date ↑" }
-    ],
-    merchandise: [
-        { value: "", text: "Sort by..." },
+      ],
+      merchandise: [
+        { value: "id_asc", text: "ID ↑" },
+        { value: "id_desc", text: "ID ↓" },
         { value: "price_desc", text: "Price ↓" },
         { value: "price_asc", text: "Price ↑" },
         { value: "release_desc", text: "Release Date ↓" },
         { value: "release_asc", text: "Release Date ↑" }
-    ],
-    'waifu-of-the-day': [
-        { value: "", text: "Sort by..." }
-    ]
-};
+      ]
+    };
 
-let sortPerTab = {
-    waifu: "",
-    media: "",
-    studio: "",
-    voice: "",
-    fandom: "",
-    abilities: "",
-    events: "",
-    merchandise: "",
-    'waifu-of-the-day': ""
-};
+    // Store sort preference per tab, default to id_asc
+    let sortPerTab = {
+      waifu: "id_asc",
+      media: "id_asc",
+      studio: "id_asc",
+      voice: "id_asc",
+      fandom: "id_asc",
+      abilities: "id_asc",
+      events: "id_asc",
+      merchandise: "id_asc",
+      'waifu-of-the-day': ""
+    };
 
-function showForm(tab) {
-    const formSection = document.getElementById(`${tab}-form`);
-    if (!formSection) return;
+    // Show form for the selected tab
+    function showForm(tab) {
+      const formSection = document.getElementById(`${tab}-form`);
+      if (!formSection) return;
+      document.querySelectorAll('.form-section').forEach(section => section.classList.remove('active'));
+      formSection.classList.add('active');
+    }
 
-    document.querySelectorAll('.form-section').forEach(section => {
-        section.classList.remove('active');
-    });
-    formSection.classList.add('active');
-}
-
-function loadData(tab, isPreload = false) {
-    // Only update currentTab if this is not a preload operation
-    if (!isPreload) {
+    // Load data for the selected tab
+    function loadData(tab, isPreload = false) {
+      if (!isPreload) {
         currentTab = tab;
         showForm(tab);
-    }
+      }
 
-    const search = searchInput.value;
-    const sort = sortPerTab[tab];
-    const resultsDiv = document.getElementById("results");
+      const search = searchInput.value;
+      const sort = sortPerTab[tab] || "id_asc"; // Default to id_asc
+      const resultsDiv = document.getElementById("results");
 
-    // Only update the results div if this is the active tab or not a preload
-    if (!isPreload) {
-        resultsDiv.innerHTML = "<p>Loading...</p>";
-    }
+      if (!isPreload) resultsDiv.innerHTML = "<p>Loading...</p>";
 
-    sortSelect.innerHTML = "";
-    sortOptions[tab].forEach(opt => {
+      // Populate sort dropdown only for tabs that support sorting
+      sortSelect.innerHTML = "";
+      if (sortOptions[tab]) {
+        sortOptions[tab].forEach(opt => {
+          const option = document.createElement("option");
+          option.value = opt.value;
+          option.textContent = opt.text;
+          if (opt.value === sort) option.selected = true;
+          sortSelect.appendChild(option);
+        });
+      } else {
         const option = document.createElement("option");
-        option.value = opt.value;
-        option.textContent = opt.text;
-        if (opt.value === sort) option.selected = true;
+        option.value = "";
+        option.textContent = "Sort by...";
         sortSelect.appendChild(option);
-    });
+      }
 
-    const url = (tab === 'waifu-of-the-day') 
-        ? 'waifu-of-the-day.php' 
+      const url = (tab === 'waifu-of-the-day')
+        ? 'waifu-of-the-day.php'
         : `${tab}.php?search=${encodeURIComponent(search)}&sort=${sort}`;
 
-    fetch(url, { cache: 'no-store' })
+      fetch(url, { cache: 'no-store' })
         .then(res => {
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-            return res.text();
+          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+          return res.text();
         })
         .then(html => {
-            if (tab === 'waifu-of-the-day') {
-                // Always update the Waifu of the Day image
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html.replace(/<b>(Origin|Personality|Appearance|Popularity|Media|Studio|Voice Actor|Fandoms):<\/b>/g, '<span class="category-header">$1:</span>');
-                const waifuImage = tempDiv.querySelector('img');
-                if (waifuImage) {
-                    const waifuOfTheDayImage = document.getElementById('waifu-of-the-day-image');
-                    waifuOfTheDayImage.src = waifuImage.src;
-                    waifuOfTheDayImage.style.display = 'block';
-                }
-                // Only update results if this is the active tab
-                if (currentTab === 'waifu-of-the-day') {
-                    resultsDiv.innerHTML = tempDiv.innerHTML;
-                }
-            } else {
-                resultsDiv.innerHTML = html;
+          if (tab === 'waifu-of-the-day') {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html.replace(/<b>(Origin|Personality|Appearance|Popularity|Media|Studio|Voice Actor|Fandoms):<\/b>/g, '<span class="category-header">$1:</span>');
+            const waifuImage = tempDiv.querySelector('img');
+            if (waifuImage) {
+              const waifuOfTheDayImage = document.getElementById('waifu-of-the-day-image');
+              waifuOfTheDayImage.src = waifuImage.src;
+              waifuOfTheDayImage.style.display = 'block';
             }
+            if (currentTab === 'waifu-of-the-day') resultsDiv.innerHTML = tempDiv.innerHTML;
+          } else {
+            resultsDiv.innerHTML = html;
+          }
         })
         .catch(err => {
-            if (!isPreload) {
-                resultsDiv.innerHTML = `<p style='color:red;'>Error loading ${tab} data: ${err.message}</p>`;
-            }
-            console.error(err);
+          if (!isPreload) resultsDiv.innerHTML = `<p style='color:red;'>Error loading ${tab} data: ${err.message}</p>`;
+          console.error(err);
         });
-}
+    }
 
-function addWaifu() {
-    const waifu = {
+    // Generic function to add an entry via fetch
+    function addEntry(tab, formId, data, endpoint) {
+      fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert(`${tab} added successfully!`);
+            loadData(tab.toLowerCase());
+            document.getElementById(formId).reset();
+          } else {
+            alert(`Error adding ${tab.toLowerCase()}: ${data.message}`);
+          }
+        })
+        .catch(err => {
+          alert(`Error adding ${tab.toLowerCase()}.`);
+          console.error(err);
+        });
+    }
+
+    // Generic function to delete an entry via fetch
+    function deleteEntry(tab, formId, identifier, endpoint) {
+      fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert(`${tab} deleted successfully!`);
+            loadData(tab.toLowerCase());
+            document.getElementById(formId).reset();
+          } else {
+            alert(`Error deleting ${tab.toLowerCase()}: ${data.message}`);
+          }
+        })
+        .catch(err => {
+          alert(`Error deleting ${tab.toLowerCase()}.`);
+          console.error(err);
+        });
+    }
+
+    function addWaifu() {
+      const waifu = {
         name: document.getElementById('waifuName').value.trim(),
         origin: document.getElementById('waifuOrigin').value.trim(),
         personality: document.getElementById('waifuPersonality').value.trim(),
@@ -828,519 +844,201 @@ function addWaifu() {
         media: document.getElementById('waifuMedia').value.trim(),
         voiceActor: document.getElementById('waifuVoiceActor').value.trim(),
         imageURL: document.getElementById('waifuImage').value.trim()
-    };
+      };
+      addEntry('Waifu', 'add-waifu-form', waifu, 'add_waifu.php');
+    }
 
-    fetch('add_waifu.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(waifu)
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Waifu added successfully!');
-                loadData('waifu');
-                document.getElementById('add-waifu-form').reset();
-            } else {
-                alert('Error adding waifu: ' + data.message);
-            }
-        })
-        .catch(err => {
-            alert('Error adding waifu.');
-            console.error(err);
-        });
-}
+    function deleteWaifu() {
+      const identifier = document.getElementById('waifuIdentifier').value.trim();
+      deleteEntry('Waifu', 'delete-waifu-form', identifier, 'delete_waifu.php');
+    }
 
-function deleteWaifu() {
-    const identifier = document.getElementById('waifuIdentifier').value.trim();
-
-    fetch('delete_waifu.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ identifier })
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Waifu deleted successfully!');
-                loadData('waifu');
-                document.getElementById('delete-waifu-form').reset();
-            } else {
-                alert('Error deleting waifu: ' + data.message);
-            }
-        })
-        .catch(err => {
-            alert('Error deleting waifu.');
-            console.error(err);
-        });
-}
-
-function addMedia() {
-    const media = {
+    function addMedia() {
+      const media = {
         title: document.getElementById('mediaTitle').value.trim(),
         type: document.getElementById('mediaType').value.trim(),
         releaseYear: document.getElementById('mediaReleaseYear').value,
         studioID: document.getElementById('mediaStudio').value.trim()
-    };
+      };
+      addEntry('Media', 'add-media-form', media, 'add_media.php');
+    }
 
-    fetch('add_media.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(media)
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Media added successfully!');
-                loadData('media');
-                document.getElementById('add-media-form').reset();
-            } else {
-                alert('Error adding media: ' + data.message);
-            }
-        })
-        .catch(err => {
-            alert('Error adding media.');
-            console.error(err);
-        });
-}
+    function deleteMedia() {
+      const identifier = document.getElementById('mediaIdentifier').value.trim();
+      deleteEntry('Media', 'delete-media-form', identifier, 'delete_media.php');
+    }
 
-function deleteMedia() {
-    const identifier = document.getElementById('mediaIdentifier').value.trim();
-
-    fetch('delete_media.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ identifier })
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Media deleted successfully!');
-                loadData('media');
-                document.getElementById('delete-media-form').reset();
-            } else {
-                alert('Error deleting media: ' + data.message);
-            }
-        })
-        .catch(err => {
-            alert('Error deleting media.');
-            console.error(err);
-        });
-}
-
-function addStudio() {
-    const studio = {
+    function addStudio() {
+      const studio = {
         name: document.getElementById('studioName').value.trim(),
         location: document.getElementById('studioLocation').value.trim(),
         foundedYear: document.getElementById('studioFoundedYear').value
-    };
+      };
+      addEntry('Studio', 'add-studio-form', studio, 'add_studio.php');
+    }
 
-    fetch('add_studio.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(studio)
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Studio added successfully!');
-                loadData('studio');
-                document.getElementById('add-studio-form').reset();
-            } else {
-                alert('Error adding studio: ' + data.message);
-            }
-        })
-        .catch(err => {
-            alert('Error adding studio.');
-            console.error(err);
-        });
-}
+    function deleteStudio() {
+      const identifier = document.getElementById('studioIdentifier').value.trim();
+      deleteEntry('Studio', 'delete-studio-form', identifier, 'delete_studio.php');
+    }
 
-function deleteStudio() {
-    const identifier = document.getElementById('studioIdentifier').value.trim();
-
-    fetch('delete_studio.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ identifier })
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Studio deleted successfully!');
-                loadData('studio');
-                document.getElementById('delete-studio-form').reset();
-            } else {
-                alert('Error deleting studio: ' + data.message);
-            }
-        })
-        .catch(err => {
-            alert('Error deleting studio.');
-            console.error(err);
-        });
-}
-
-function addVoiceActor() {
-    const voiceActor = {
+    function addVoiceActor() {
+      const voiceActor = {
         name: document.getElementById('voiceName').value.trim(),
         nationality: document.getElementById('voiceNationality').value.trim(),
         agency: document.getElementById('voiceAgency').value.trim()
-    };
+      };
+      addEntry('Voice Actor', 'add-voice-form', voiceActor, 'add_voiceactor.php');
+    }
 
-    fetch('add_voiceactor.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(voiceActor)
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Voice Actor added successfully!');
-                loadData('voice');
-                document.getElementById('add-voice-form').reset();
-            } else {
-                alert('Error adding voice actor: ' + data.message);
-            }
-        })
-        .catch(err => {
-            alert('Error adding voice actor.');
-            console.error(err);
-        });
-}
+    function deleteVoiceActor() {
+      const identifier = document.getElementById('voiceIdentifier').value.trim();
+      deleteEntry('Voice Actor', 'delete-voice-form', identifier, 'delete_voiceactor.php');
+    }
 
-function deleteVoiceActor() {
-    const identifier = document.getElementById('voiceIdentifier').value.trim();
-
-    fetch('delete_voiceactor.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ identifier })
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Voice Actor deleted successfully!');
-                loadData('voice');
-                document.getElementById('delete-voice-form').reset();
-            } else {
-                alert('Error deleting voice actor: ' + data.message);
-            }
-        })
-        .catch(err => {
-            alert('Error deleting voice actor.');
-            console.error(err);
-        });
-}
-
-function addFandom() {
-    const fandom = {
+    function addFandom() {
+      const fandom = {
         waifuID: document.getElementById('fandomWaifuID').value.trim(),
         fanClubName: document.getElementById('fandomFanClubName').value.trim(),
         memberCount: document.getElementById('fandomMemberCount').value,
         platform: document.getElementById('fandomPlatform').value.trim()
-    };
+      };
+      addEntry('Fandom', 'add-fandom-form', fandom, 'add_fandom.php');
+    }
 
-    fetch('add_fandom.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(fandom)
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Fandom added successfully!');
-                loadData('fandom');
-                document.getElementById('add-fandom-form').reset();
-            } else {
-                alert('Error adding fandom: ' + data.message);
-            }
-        })
-        .catch(err => {
-            alert('Error adding fandom.');
-            console.error(err);
-        });
-}
+    function deleteFandom() {
+      const identifier = document.getElementById('fandomIdentifier').value.trim();
+      deleteEntry('Fandom', 'delete-fandom-form', identifier, 'delete_fandom.php');
+    }
 
-function deleteFandom() {
-    const identifier = document.getElementById('fandomIdentifier').value.trim();
-
-    fetch('delete_fandom.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ identifier })
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Fandom deleted successfully!');
-                loadData('fandom');
-                document.getElementById('delete-fandom-form').reset();
-            } else {
-                alert('Error deleting fandom: ' + data.message);
-            }
-        })
-        .catch(err => {
-            alert('Error deleting fandom.');
-            console.error(err);
-        });
-}
-
-function addAbility() {
-    const ability = {
+    function addAbility() {
+      const ability = {
         waifuID: document.getElementById('abilityWaifuID').value.trim(),
         name: document.getElementById('abilityName').value.trim(),
         description: document.getElementById('abilityDescription').value.trim(),
         type: document.getElementById('abilityType').value.trim()
-    };
+      };
+      addEntry('Ability', 'add-abilities-form', ability, 'add_ability.php');
+    }
 
-    fetch('add_ability.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(ability)
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Ability added successfully!');
-                loadData('abilities');
-                document.getElementById('add-abilities-form').reset();
-            } else {
-                alert('Error adding ability: ' + data.message);
-            }
-        })
-        .catch(err => {
-            alert('Error adding ability.');
-            console.error(err);
-        });
-}
+    function deleteAbility() {
+      const identifier = document.getElementById('abilityIdentifier').value.trim();
+      deleteEntry('Ability', 'delete-abilities-form', identifier, 'delete_ability.php');
+    }
 
-function deleteAbility() {
-    const identifier = document.getElementById('abilityIdentifier').value.trim();
-
-    fetch('delete_ability.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ identifier })
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Ability deleted successfully!');
-                loadData('abilities');
-                document.getElementById('delete-abilities-form').reset();
-            } else {
-                alert('Error deleting ability: ' + data.message);
-            }
-        })
-        .catch(err => {
-            alert('Error deleting ability.');
-            console.error(err);
-        });
-}
-
-function addEvent() {
-    const event = {
+    function addEvent() {
+      const event = {
         name: document.getElementById('eventName').value.trim(),
         location: document.getElementById('eventLocation').value.trim(),
         date: document.getElementById('eventDate').value
-    };
+      };
+      addEntry('Event', 'add-events-form', event, 'add_event.php');
+    }
 
-    fetch('add_event.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(event)
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Event added successfully!');
-                loadData('events');
-                document.getElementById('add-events-form').reset();
-            } else {
-                alert('Error adding event: ' + data.message);
-            }
-        })
-        .catch(err => {
-            alert('Error adding event.');
-            console.error(err);
-        });
-}
+    function deleteEvent() {
+      const identifier = document.getElementById('eventIdentifier').value.trim();
+      deleteEntry('Event', 'delete-events-form', identifier, 'delete_event.php');
+    }
 
-function deleteEvent() {
-    const identifier = document.getElementById('eventIdentifier').value.trim();
-
-    fetch('delete_event.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ identifier })
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Event deleted successfully!');
-                loadData('events');
-                document.getElementById('delete-events-form').reset();
-            } else {
-                alert('Error deleting event: ' + data.message);
-            }
-        })
-        .catch(err => {
-            alert('Error deleting event.');
-            console.error(err);
-        });
-}
-
-function addMerchandise() {
-    const merchandise = {
+    function addMerchandise() {
+      const merchandise = {
         waifuID: document.getElementById('merchWaifuID').value.trim(),
         name: document.getElementById('merchName').value.trim(),
         type: document.getElementById('merchType').value.trim(),
         price: document.getElementById('merchPrice').value,
         releaseDate: document.getElementById('merchReleaseDate').value
-    };
+      };
+      addEntry('Merchandise', 'add-merchandise-form', merchandise, 'add_merchandise.php');
+    }
 
-    fetch('add_merchandise.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(merchandise)
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Merchandise added successfully!');
-                loadData('merchandise');
-                document.getElementById('add-merchandise-form').reset();
-            } else {
-                alert('Error adding merchandise: ' + data.message);
-            }
-        })
-        .catch(err => {
-            alert('Error adding merchandise.');
-            console.error(err);
-        });
-}
+    function deleteMerchandise() {
+      const identifier = document.getElementById('merchIdentifier').value.trim();
+      deleteEntry('Merchandise', 'delete-merchandise-form', identifier, 'delete_merchandise.php');
+    }
 
-function deleteMerchandise() {
-    const identifier = document.getElementById('merchIdentifier').value.trim();
+    // Banner image rotation functions
+    const images = document.querySelectorAll('#image-banner img');
+    let currentImageIndex = 0;
+    let rotationInterval;
 
-    fetch('delete_merchandise.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ identifier })
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Merchandise deleted successfully!');
-                loadData('merchandise');
-                document.getElementById('delete-merchandise-form').reset();
-            } else {
-                alert('Error deleting merchandise: ' + data.message);
-            }
-        })
-        .catch(err => {
-            alert('Error deleting merchandise.');
-            console.error(err);
-        });
-}
+    function rotateImages() {
+      images[currentImageIndex].classList.remove('active');
+      currentImageIndex = (currentImageIndex + 1) % images.length;
+      images[currentImageIndex].classList.add('active');
+    }
 
-const images = document.querySelectorAll('#image-banner img');
-let currentImageIndex = 0;
-let rotationInterval;
-
-function rotateImages() {
-    images[currentImageIndex].classList.remove('active');
-    currentImageIndex = (currentImageIndex + 1) % images.length;
-    images[currentImageIndex].classList.add('active');
-}
-
-function gambleImage() {
-    images[currentImageIndex].classList.remove('active');
-    let newIndex;
-    do {
+    function gambleImage() {
+      images[currentImageIndex].classList.remove('active');
+      let newIndex;
+      do {
         newIndex = Math.floor(Math.random() * images.length);
-    } while (newIndex === currentImageIndex);
-    currentImageIndex = newIndex;
+      } while (newIndex === currentImageIndex);
+      currentImageIndex = newIndex;
+      images[currentImageIndex].classList.add('active');
+      startRotation();
+    }
+
+    function startRotation() {
+      clearInterval(rotationInterval);
+      rotationInterval = setInterval(rotateImages, 10000);
+    }
+
+    function skipImage() {
+      rotateImages();
+      startRotation();
+    }
+
+    // Apply selected theme to UI elements
+    function changeTheme(index) {
+      themeIndex = parseInt(index);
+      const theme = themes[themeIndex];
+      document.body.style.setProperty('--bg-start', theme.bgStart);
+      document.body.style.setProperty('--bg-end', theme.bgEnd);
+      document.body.style.setProperty('--tab-bg', theme.tabBg);
+      document.body.style.setProperty('--tab-hover', theme.tabHover);
+      document.body.style.setProperty('--th-bg', theme.thBg);
+      document.body.style.setProperty('--h1-color', theme.h1Color);
+      document.body.style.setProperty('--sidebar-h2', theme.sidebarH2);
+      document.body.style.setProperty('--banner-bg', theme.bannerBg);
+      document.body.style.setProperty('--footer-bg', theme.footerBg);
+      document.body.style.setProperty('--footer-text', theme.footerText);
+      document.body.style.setProperty('--hover-bg', theme.hoverBg);
+      document.body.style.setProperty('--chat-bg', theme.chatBg);
+
+      document.querySelector('.theme-menu').style.background = theme.tabBg;
+      document.querySelector('.theme-menu select').style.background = theme.tabBg;
+      document.querySelector('.theme-menu select').style.color = '#fff';
+
+      document.querySelectorAll('.tabs button, .sidebar button, .next-button, .gamble-button, .waifu-of-the-day-button').forEach(btn => {
+        btn.style.background = theme.tabBg;
+        btn.onmouseover = () => btn.style.background = theme.tabHover;
+        btn.onmouseout = () => btn.style.background = theme.tabBg;
+      });
+      document.querySelector('.chat-box').style.background = theme.chatBg;
+    }
+
+    // Initialize banner rotation
     images[currentImageIndex].classList.add('active');
     startRotation();
-}
 
-function startRotation() {
-    clearInterval(rotationInterval);
-    rotationInterval = setInterval(rotateImages, 10000);
-}
+    // Set up event listeners on page load
+    window.onload = () => {
+      searchInput = document.getElementById("searchInput");
+      sortSelect = document.getElementById("sortSelect");
 
-function skipImage() {
-    rotateImages();
-    startRotation();
-}
-
-function changeTheme(index) {
-    themeIndex = parseInt(index);
-    const theme = themes[themeIndex];
-    document.body.style.setProperty('--bg-start', theme.bgStart);
-    document.body.style.setProperty('--bg-end', theme.bgEnd);
-    document.body.style.setProperty('--tab-bg', theme.tabBg);
-    document.body.style.setProperty('--tab-hover', theme.tabHover);
-    document.body.style.setProperty('--th-bg', theme.thBg);
-    document.body.style.setProperty('--h1-color', theme.h1Color);
-    document.body.style.setProperty('--sidebar-h2', theme.sidebarH2);
-    document.body.style.setProperty('--banner-bg', theme.bannerBg);
-    document.body.style.setProperty('--footer-bg', theme.footerBg);
-    document.body.style.setProperty('--footer-text', theme.footerText);
-    document.body.style.setProperty('--hover-bg', theme.hoverBg);
-    document.body.style.setProperty('--chat-bg', theme.chatBg);
-
-    document.querySelector('.theme-menu').style.background = theme.tabBg;
-    document.querySelector('.theme-menu select').style.background = theme.tabBg;
-    document.querySelector('.theme-menu select').style.color = '#fff';
-
-    document.querySelectorAll('.tabs button').forEach(btn => {
-        btn.style.background = theme.tabBg;
-        btn.onmouseover = () => btn.style.background = theme.tabHover;
-        btn.onmouseout = () => btn.style.background = theme.tabBg;
-    });
-    document.querySelectorAll('.sidebar button').forEach(btn => {
-        btn.style.background = theme.tabBg;
-        btn.onmouseover = () => btn.style.background = theme.tabHover;
-        btn.onmouseout = () => btn.style.background = theme.tabBg;
-    });
-    document.querySelector('.next-button').style.background = theme.tabBg;
-    document.querySelector('.next-button').onmouseover = () => document.querySelector('.next-button').style.background = theme.tabHover;
-    document.querySelector('.next-button').onmouseout = () => document.querySelector('.next-button').style.background = theme.tabBg;
-    document.querySelector('.gamble-button').style.background = theme.tabBg;
-    document.querySelector('.gamble-button').onmouseover = () => document.querySelector('.gamble-button').style.background = theme.tabHover;
-    document.querySelector('.gamble-button').onmouseout = () => document.querySelector('.gamble-button').style.background = theme.tabBg;
-    document.querySelector('.waifu-of-the-day-button').style.background = theme.tabBg;
-    document.querySelector('.waifu-of-the-day-button').onmouseover = () => document.querySelector('.waifu-of-the-day-button').style.background = theme.tabHover;
-    document.querySelector('.waifu-of-the-day-button').onmouseout = () => document.querySelector('.waifu-of-the-day-button').style.background = theme.tabBg;
-    document.querySelector('.chat-box').style.background = theme.chatBg;
-}
-
-images[currentImageIndex].classList.add('active');
-startRotation();
-
-window.onload = () => {
-    searchInput = document.getElementById("searchInput");
-    sortSelect = document.getElementById("sortSelect");
-
-    searchInput.addEventListener("input", () => loadData(currentTab));
-    sortSelect.addEventListener("change", () => {
+      searchInput.addEventListener("input", () => loadData(currentTab));
+      sortSelect.addEventListener("change", () => {
         sortPerTab[currentTab] = sortSelect.value;
         loadData(currentTab);
-    });
+      });
 
-    document.querySelectorAll(".tabs button").forEach(button => {
-        button.addEventListener("click", () => {
-            loadData(button.dataset.tab);
-        });
-    });
+      document.querySelectorAll(".tabs button").forEach(button => {
+        button.addEventListener("click", () => loadData(button.dataset.tab));
+      });
 
-    // Preload Waifu of the Day image without changing the active tab
-    loadData('waifu-of-the-day', true);
-    // Load Waifu tab as the default active tab
-    loadData('waifu');
-};
+      loadData('waifu-of-the-day', true); // Preload Waifu of the Day
+      loadData('waifu'); // Load Waifu tab as default
+    };
   </script>
 </body>
 </html>

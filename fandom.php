@@ -16,15 +16,21 @@ if (!empty($search)) {
 }
 
 switch ($sort) {
-  case 'members_desc':
-    $sql .= " ORDER BY f.MemberCount DESC";
-    break;
-  case 'members_asc':
-    $sql .= " ORDER BY f.MemberCount ASC";
-    break;
-  default:
-    $sql .= " ORDER BY f.FanClubName ASC";
-    break;
+    case 'id_asc':
+        $sql .= " ORDER BY f.FandomID ASC";
+        break;
+    case 'id_desc':
+        $sql .= " ORDER BY f.FandomID DESC";
+        break;
+    case 'members_desc':
+        $sql .= " ORDER BY f.MemberCount DESC";
+        break;
+    case 'members_asc':
+        $sql .= " ORDER BY f.MemberCount ASC";
+        break;
+    default:
+        $sql .= " ORDER BY f.FandomID ASC";
+        break;
 }
 
 $result = $conn->query($sql);

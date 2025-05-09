@@ -19,6 +19,12 @@ if ($search !== '') {
 
 // Sorting
 switch ($sort) {
+    case 'id_asc':
+        $sql .= " ORDER BY StudioID ASC";
+        break;
+    case 'id_desc':
+        $sql .= " ORDER BY StudioID DESC";
+        break;
     case 'founded_asc':
         $sql .= " ORDER BY FoundedYear ASC";
         break;
@@ -26,7 +32,7 @@ switch ($sort) {
         $sql .= " ORDER BY FoundedYear DESC";
         break;
     default:
-        $sql .= " ORDER BY Name ASC";
+        $sql .= " ORDER BY StudioID ASC";
         break;
 }
 

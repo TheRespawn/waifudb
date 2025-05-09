@@ -16,21 +16,27 @@ if (!empty($search)) {
 }
 
 switch ($sort) {
-  case 'price_desc':
-    $sql .= " ORDER BY m.Price DESC";
-    break;
-  case 'price_asc':
-    $sql .= " ORDER BY m.Price ASC";
-    break;
-  case 'release_desc':
-    $sql .= " ORDER BY m.ReleaseDate DESC";
-    break;
-  case 'release_asc':
-    $sql .= " ORDER BY m.ReleaseDate ASC";
-    break;
-  default:
-    $sql .= " ORDER BY m.Name ASC";
-    break;
+    case 'id_asc':
+        $sql .= " ORDER BY m.MerchID ASC";
+        break;
+    case 'id_desc':
+        $sql .= " ORDER BY m.MerchID DESC";
+        break;
+    case 'price_desc':
+        $sql .= " ORDER BY m.Price DESC";
+        break;
+    case 'price_asc':
+        $sql .= " ORDER BY m.Price ASC";
+        break;
+    case 'release_desc':
+        $sql .= " ORDER BY m.ReleaseDate DESC";
+        break;
+    case 'release_asc':
+        $sql .= " ORDER BY m.ReleaseDate ASC";
+        break;
+    default:
+        $sql .= " ORDER BY m.MerchID ASC";
+        break;
 }
 
 $result = $conn->query($sql);

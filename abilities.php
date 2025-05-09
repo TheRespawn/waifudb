@@ -16,17 +16,22 @@ if (!empty($search)) {
 }
 
 switch ($sort) {
-  case 'name':
-    $sql .= " ORDER BY a.Name ASC";
-    break;
-  case 'type':
-    $sql .= " ORDER BY a.Type ASC";
-    break;
-  default:
-    $sql .= " ORDER BY a.AbilityID ASC";
-    break;
+    case 'id_asc':
+        $sql .= " ORDER BY a.AbilityID ASC";
+        break;
+    case 'id_desc':
+        $sql .= " ORDER BY a.AbilityID DESC";
+        break;
+    case 'name':
+        $sql .= " ORDER BY a.Name ASC";
+        break;
+    case 'type':
+        $sql .= " ORDER BY a.Type ASC";
+        break;
+    default:
+        $sql .= " ORDER BY a.AbilityID ASC";
+        break;
 }
-
 $result = $conn->query($sql);
 
 if ($result && $result->num_rows > 0) {

@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 include 'connect.php';
 
 $search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
-$sort = $_GET['sort'] ?? '';
+$sort = $_GET['sort'] ?? 'id_asc'; // Default to id_asc
 
 $sql = "
     SELECT w.WaifuID, w.Name, w.Origin, w.Personality, w.Appearance, w.Popularity, 
@@ -19,6 +19,12 @@ if ($search !== '') {
 }
 
 switch ($sort) {
+    case 'id_asc':
+        $sql .= " ORDER BY w.WaifuID ASC";
+        break;
+    case 'id_desc':
+        $sql .= " ORDER BY w.WaifuID DESC";
+        break;
     case 'popularity_asc':
         $sql .= " ORDER BY w.Popularity ASC";
         break;
@@ -26,7 +32,7 @@ switch ($sort) {
         $sql .= " ORDER BY w.Popularity DESC";
         break;
     default:
-        $sql .= " ORDER BY w.Name ASC";
+        $sql .= " ORDER BY w.WaifuID ASC"; // Default to ID ascending
         break;
 }
 

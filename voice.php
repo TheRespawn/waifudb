@@ -13,6 +13,18 @@ $sql = "
 if ($search !== '') {
     $sql .= " WHERE Name LIKE '%$search%' OR Nationality LIKE '%$search%' OR Agency LIKE '%$search%'";
 }
+$sort = $_GET['sort'] ?? 'id_asc';
+switch ($sort) {
+    case 'id_asc':
+        $sql .= " ORDER BY VoiceActorID ASC";
+        break;
+    case 'id_desc':
+        $sql .= " ORDER BY VoiceActorID DESC";
+        break;
+    default:
+        $sql .= " ORDER BY VoiceActorID ASC";
+        break;
+}
 
 $result = $conn->query($sql);
 

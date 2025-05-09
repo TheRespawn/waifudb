@@ -12,15 +12,21 @@ if (!empty($search)) {
 }
 
 switch ($sort) {
-  case 'date_desc':
-    $sql .= " ORDER BY Date DESC";
-    break;
-  case 'date_asc':
-    $sql .= " ORDER BY Date ASC";
-    break;
-  default:
-    $sql .= " ORDER BY Name ASC";
-    break;
+    case 'id_asc':
+        $sql .= " ORDER BY EventID ASC";
+        break;
+    case 'id_desc':
+        $sql .= " ORDER BY EventID DESC";
+        break;
+    case 'date_desc':
+        $sql .= " ORDER BY Date DESC";
+        break;
+    case 'date_asc':
+        $sql .= " ORDER BY Date ASC";
+        break;
+    default:
+        $sql .= " ORDER BY EventID ASC";
+        break;
 }
 
 $result = $conn->query($sql);
