@@ -1,5 +1,5 @@
 <?php
-include 'connect.php';
+include '../connect.php';
 
 $search = $_GET['search'] ?? '';
 $sort = $_GET['sort'] ?? '';

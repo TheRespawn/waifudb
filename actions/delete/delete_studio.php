@@ -1,20 +1,20 @@
 <?php
-include 'connect.php';
+include '../../connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
     $identifier = $conn->real_escape_string($data['identifier']);
 
     if (is_numeric($identifier)) {
-        $sql = "DELETE FROM abilities WHERE AbilityID = '$identifier'";
+        $sql = "DELETE FROM studio WHERE StudioID = '$identifier'";
     } else {
-        $sql = "DELETE FROM abilities WHERE Name = '$identifier' LIMIT 1";
+        $sql = "DELETE FROM studio WHERE Name = '$identifier' LIMIT 1";
     }
 
     if ($conn->query($sql) === TRUE && $conn->affected_rows > 0) {
         echo json_encode(['status' => 'success']);
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Ability not found or error occurred']);
+        echo json_encode(['status' => 'error', 'message' => 'Studio not found or error occurred']);
     }
 
     $conn->close();

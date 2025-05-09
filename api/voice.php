@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-include 'connect.php';
+include '../connect.php';
 
 $search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
 

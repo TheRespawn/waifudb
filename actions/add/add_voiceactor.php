@@ -1,16 +1,15 @@
 <?php
-include 'connect.php';
+include '../../connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
 
-    $waifuID = $data['waifuID'] ? "'". $conn->real_escape_string($data['waifuID']) . "'" : 'NULL';
     $name = $conn->real_escape_string($data['name']);
-    $description = $conn->real_escape_string($data['description']);
-    $type = $conn->real_escape_string($data['type']);
+    $nationality = $conn->real_escape_string($data['nationality']);
+    $agency = $conn->real_escape_string($data['agency']);
 
-    $sql = "INSERT INTO abilities (WaifuID, Name, Description, Type)
-            VALUES ($waifuID, '$name', '$description', '$type')";
+    $sql = "INSERT INTO voiceactor (Name, Nationality, Agency)
+            VALUES ('$name', '$nationality', '$agency')";
 
     if ($conn->query($sql) === TRUE) {
         echo json_encode(['status' => 'success']);

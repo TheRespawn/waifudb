@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Waifu Database</title>
-  <link rel="icon" type="image/x-icon" href="images/icon.ico">
+  <link rel="icon" type="image/x-icon" href="/images/icon.ico">
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -367,6 +367,19 @@
     .theme-menu select:hover {
       background: var(--tab-hover, #ff66a3);
     }
+    #waifu-of-the-day-image {
+      margin-top: 1rem;
+      max-width: 300px;
+      border-radius: 6px;
+      display: none;
+    }
+
+    .waifu-of-the-day-header {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--h1-color, #ff66a3); /* Matches theme color */
+    }
   </style>
 </head>
 <body>
@@ -582,18 +595,18 @@
   <!-- Banner with rotating images and Waifu of the Day -->
   <div class="banner-container">
     <div id="image-banner">
-      <img src="images/waifu1.jpg" alt="Waifu Character 1">
-      <img src="images/waifu2.png" alt="Waifu Character 2">
-      <img src="images/waifu3.png" alt="Waifu Character 3">
-      <img src="images/waifu4.jpg" alt="Waifu Character 4">
-      <img src="images/waifu5.webp" alt="Waifu Character 5">
-      <img src="images/waifu6.webp" alt="Waifu Character 6">
-      <img src="images/waifu7.webp" alt="Waifu Character 7">
-      <img src="images/waifu8.png" alt="Waifu Character 8">
-      <img src="images/waifu9.webp" alt="Waifu Character 9">
-      <img src="images/waifu10.webp" alt="Waifu Character 10">
-      <img src="images/waifu11.gif" alt="Waifu Character 11">
-      <img src="images/waifu12.gif" alt="Waifu Character 12">
+      <img src="/images/waifu1.jpg" alt="Waifu Character 1">
+      <img src="/images/waifu2.png" alt="Waifu Character 2">
+      <img src="/images/waifu3.png" alt="Waifu Character 3">
+      <img src="/images/waifu4.jpg" alt="Waifu Character 4">
+      <img src="/images/waifu5.webp" alt="Waifu Character 5">
+      <img src="/images/waifu6.webp" alt="Waifu Character 6">
+      <img src="/images/waifu7.webp" alt="Waifu Character 7">
+      <img src="/images/waifu8.png" alt="Waifu Character 8">
+      <img src="/images/waifu9.webp" alt="Waifu Character 9">
+      <img src="/images/waifu10.webp" alt="Waifu Character 10">
+      <img src="/images/waifu11.gif" alt="Waifu Character 11">
+      <img src="/images/waifu12.gif" alt="Waifu Character 12">
     </div>
     <button class="next-button" onclick="skipImage()">Next</button>
     <button class="gamble-button" onclick="gambleImage()">Gamble</button>
@@ -736,12 +749,11 @@
       }
 
       const search = searchInput.value;
-      const sort = sortPerTab[tab] || "id_asc"; // Default to id_asc
+      const sort = sortPerTab[tab] || "id_asc";
       const resultsDiv = document.getElementById("results");
 
       if (!isPreload) resultsDiv.innerHTML = "<p>Loading...</p>";
 
-      // Populate sort dropdown only for tabs that support sorting
       sortSelect.innerHTML = "";
       if (sortOptions[tab]) {
         sortOptions[tab].forEach(opt => {
@@ -759,8 +771,8 @@
       }
 
       const url = (tab === 'waifu-of-the-day')
-        ? 'waifu-of-the-day.php'
-        : `${tab}.php?search=${encodeURIComponent(search)}&sort=${sort}`;
+        ? `/api/waifu-of-the-day.php`
+        : `/api/${tab}.php?search=${encodeURIComponent(search)}&sort=${sort}`;
 
       fetch(url, { cache: 'no-store' })
         .then(res => {
@@ -770,7 +782,7 @@
         .then(html => {
           if (tab === 'waifu-of-the-day') {
             const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = html.replace(/<b>(Origin|Personality|Appearance|Popularity|Media|Studio|Voice Actor|Fandoms):<\/b>/g, '<span class="category-header">$1:</span>');
+            tempDiv.innerHTML = `<div class="waifu-of-the-day-header">Waifu of the Day:</div>` + html.replace(/<b>(Origin|Personality|Appearance|Popularity|Media|Studio|Voice Actor|Fandoms):<\/b>/g, '<span class="category-header">$1:</span>');
             const waifuImage = tempDiv.querySelector('img');
             if (waifuImage) {
               const waifuOfTheDayImage = document.getElementById('waifu-of-the-day-image');
@@ -790,7 +802,7 @@
 
     // Generic function to add an entry via fetch
     function addEntry(tab, formId, data, endpoint) {
-      fetch(endpoint, {
+      fetch(`/actions/add/${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -813,7 +825,7 @@
 
     // Generic function to delete an entry via fetch
     function deleteEntry(tab, formId, identifier, endpoint) {
-      fetch(endpoint, {
+      fetch(`/actions/delete/${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ identifier })
