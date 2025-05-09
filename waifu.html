@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Waifu Database</title>
-  <link rel="icon" type="image/x-icon" href="icon.ico">
+  <link rel="icon" type="image/x-icon" href="images/icon.ico">
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -175,7 +175,7 @@
       opacity: 1;
     }
 
-    .next-button, .gamble-button {
+    .next-button, .gamble-button, .waifu-of-the-day-button {
       background: var(--tab-bg, #ff99cc);
       border: none;
       color: white;
@@ -187,7 +187,7 @@
       margin-top: 1rem;
     }
 
-    .next-button:hover, .gamble-button:hover {
+    .next-button:hover, .gamble-button:hover, .waifu-of-the-day-button:hover {
       background: var(--tab-hover, #ff66a3);
     }
 
@@ -198,6 +198,47 @@
       color: #555;
       margin-top: 0.5rem;
       max-width: 300px;
+    }
+
+    .waifu-of-the-day-button {
+      width: 100%;
+      max-width: 300px;
+    }
+
+    #waifu-of-the-day-image {
+      margin-top: 1rem;
+      max-width: 100px;
+      border-radius: 6px;
+      display: none;
+    }
+
+    .chat-box {
+      width: 100%;
+      max-width: 1000px;
+      margin: 2rem auto;
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .chat-box h2 {
+      color: var(--h1-color, #ff66a3);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .chat-message {
+      padding: 0.5rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .chat-message:last-child {
+      border-bottom: none;
+    }
+
+    .chat-message strong {
+      color: #ff66a3;
     }
 
     footer {
@@ -458,6 +499,10 @@
         <button type="button" onclick="deleteMerchandise()">Delete Merchandise</button>
       </form>
     </div>
+    <div id="waifu-of-the-day-form" class="form-section">
+      <h2>Waifu of the Day</h2>
+      <p>No actions available for this tab.</p>
+    </div>
   </div>
 
   <div class="main-content">
@@ -501,6 +546,17 @@
     <button class="next-button" onclick="skipImage()">Next</button>
     <button class="gamble-button" onclick="gambleImage()">Gamble</button>
     <div class="banner-text">There are hot Waifus in your area waiting for you</div>
+    <button class="waifu-of-the-day-button" data-tab="waifu-of-the-day" onclick="loadData('waifu-of-the-day')">Waifu of the Day</button>
+    <img id="waifu-of-the-day-image" alt="Waifu of the Day">
+  </div>
+
+  <div class="chat-box">
+    <h2>Community Chat</h2>
+    <div class="chat-message"><strong>AnimeFan123:</strong> Just saw the new waifu of the day, she's amazing! 😍</div>
+    <div class="chat-message"><strong>WaifuLover:</strong> Anyone know if they'll add more merch soon?</div>
+    <div class="chat-message"><strong>OtakuMaster:</strong> The abilities tab is so cool, love the details!</div>
+    <div class="chat-message"><strong>KawaiiGirl:</strong> I wish they had more events listed, would love to attend one!</div>
+    <div class="chat-message"><strong>GamerSenpai:</strong> This database is the best, keep up the great work!</div>
   </div>
 
   <footer>
@@ -534,7 +590,6 @@
     let searchInput, sortSelect;
     let themeIndex = 0;
 
-    // Define all themes with their respective colors
     const themes = [
       { bgStart: '#ffe0f0', bgEnd: '#f4f7fa', tabBg: '#ff99cc', tabHover: '#ff66a3', thBg: '#ffccdd', h1Color: '#ff66a3', sidebarH2: '#ff66a3', bannerBg: '#fff0f5', footerBg: '#fce4ec', footerText: '#555', hoverBg: '#fff0f5' }, // Pink
       { bgStart: '#4a1e2e', bgEnd: '#2d1b24', tabBg: '#6b2d3a', tabHover: '#8a2e3b', thBg: '#7a3d4c', h1Color: '#ff4d6d', sidebarH2: '#ff4d6d', bannerBg: '#3a1e2a', footerBg: '#2d1b24', footerText: '#e0e0e0', hoverBg: '#3a2d3a' }, // Red-Purple
@@ -589,6 +644,9 @@
         { value: "price_asc", text: "Price ↑" },
         { value: "release_desc", text: "Release Date ↓" },
         { value: "release_asc", text: "Release Date ↑" }
+      ],
+      'waifu-of-the-day': [
+        { value: "", text: "Sort by..." }
       ]
     };
 
@@ -600,14 +658,18 @@
       fandom: "",
       abilities: "",
       events: "",
-      merchandise: ""
+      merchandise: "",
+      'waifu-of-the-day': ""
     };
 
     function showForm(tab) {
+      const formSection = document.getElementById(`${tab}-form`);
+      if (!formSection) return;
+
       document.querySelectorAll('.form-section').forEach(section => {
         section.classList.remove('active');
       });
-      document.getElementById(`${tab}-form`).classList.add('active');
+      formSection.classList.add('active');
     }
 
     function loadData(tab) {
@@ -615,6 +677,9 @@
       showForm(tab);
       const search = searchInput.value;
       const sort = sortPerTab[tab];
+      const resultsDiv = document.getElementById("results");
+
+      resultsDiv.innerHTML = "<p>Loading...</p>";
 
       sortSelect.innerHTML = "";
       sortOptions[tab].forEach(opt => {
@@ -625,13 +690,28 @@
         sortSelect.appendChild(option);
       });
 
-      fetch(`${tab}.php?search=${encodeURIComponent(search)}&sort=${sort}`)
-        .then(res => res.text())
+      const url = (tab === 'waifu-of-the-day') 
+        ? 'waifu-of-the-day.php' 
+        : `${tab}.php?search=${encodeURIComponent(search)}&sort=${sort}`;
+
+      fetch(url, { cache: 'no-store' })
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+          return res.text();
+        })
         .then(html => {
-          document.getElementById("results").innerHTML = html;
+          resultsDiv.innerHTML = html;
+          if (tab === 'waifu-of-the-day') {
+            const waifuImage = resultsDiv.querySelector('img');
+            if (waifuImage) {
+              const waifuOfTheDayImage = document.getElementById('waifu-of-the-day-image');
+              waifuOfTheDayImage.src = waifuImage.src;
+              waifuOfTheDayImage.style.display = 'block';
+            }
+          }
         })
         .catch(err => {
-          document.getElementById("results").innerHTML = "<p style='color:red;'>Error loading data.</p>";
+          resultsDiv.innerHTML = `<p style='color:red;'>Error loading ${tab} data: ${err.message}</p>`;
           console.error(err);
         });
     }
@@ -1128,6 +1208,9 @@
       document.querySelector('.gamble-button').style.background = theme.tabBg;
       document.querySelector('.gamble-button').onmouseover = () => document.querySelector('.gamble-button').style.background = theme.tabHover;
       document.querySelector('.gamble-button').onmouseout = () => document.querySelector('.gamble-button').style.background = theme.tabBg;
+      document.querySelector('.waifu-of-the-day-button').style.background = theme.tabBg;
+      document.querySelector('.waifu-of-the-day-button').onmouseover = () => document.querySelector('.waifu-of-the-day-button').style.background = theme.tabHover;
+      document.querySelector('.waifu-of-the-day-button').onmouseout = () => document.querySelector('.waifu-of-the-day-button').style.background = theme.tabBg;
     }
 
     images[currentImageIndex].classList.add('active');
