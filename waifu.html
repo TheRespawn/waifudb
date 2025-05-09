@@ -207,7 +207,7 @@
 
     #waifu-of-the-day-image {
       margin-top: 1rem;
-      max-width: 100px;
+      max-width: 300px;
       border-radius: 6px;
       display: none;
     }
@@ -216,7 +216,6 @@
       width: 100%;
       max-width: 1000px;
       margin: 2rem auto;
-      background: white;
       padding: 1rem;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -238,7 +237,7 @@
     }
 
     .chat-message strong {
-      color: #ff66a3;
+      color: var(--h1-color, #ff66a3);
     }
 
     footer {
@@ -591,17 +590,17 @@
     let themeIndex = 0;
 
     const themes = [
-      { bgStart: '#ffe0f0', bgEnd: '#f4f7fa', tabBg: '#ff99cc', tabHover: '#ff66a3', thBg: '#ffccdd', h1Color: '#ff66a3', sidebarH2: '#ff66a3', bannerBg: '#fff0f5', footerBg: '#fce4ec', footerText: '#555', hoverBg: '#fff0f5' }, // Pink
-      { bgStart: '#4a1e2e', bgEnd: '#2d1b24', tabBg: '#6b2d3a', tabHover: '#8a2e3b', thBg: '#7a3d4c', h1Color: '#ff4d6d', sidebarH2: '#ff4d6d', bannerBg: '#3a1e2a', footerBg: '#2d1b24', footerText: '#e0e0e0', hoverBg: '#3a2d3a' }, // Red-Purple
-      { bgStart: '#d4e4d2', bgEnd: '#e6f0e6', tabBg: '#81c784', tabHover: '#66bb6a', thBg: '#a5d6a7', h1Color: '#2e7d32', sidebarH2: '#2e7d32', bannerBg: '#e0f0e0', footerBg: '#c8e6c9', footerText: '#2e7d32', hoverBg: '#d0e0d0' }, // Green
-      { bgStart: '#fff9e6', bgEnd: '#fff3cc', tabBg: '#ffca28', tabHover: '#ffb300', thBg: '#ffe082', h1Color: '#f57f17', sidebarH2: '#f57f17', bannerBg: '#fffde7', footerBg: '#fff9e6', footerText: '#f57f17', hoverBg: '#fff0d0' }, // Yellow
-      { bgStart: '#ffebee', bgEnd: '#ffcdd2', tabBg: '#ef5350', tabHover: '#e53935', thBg: '#ef9a9a', h1Color: '#c62828', sidebarH2: '#c62828', bannerBg: '#ffebee', footerBg: '#ffcdd2', footerText: '#c62828', hoverBg: '#ffd0d0' }, // Red
-      { bgStart: '#212121', bgEnd: '#bdbdbd', tabBg: '#616161', tabHover: '#424242', thBg: '#757575', h1Color: '#ffffff', sidebarH2: '#a0a0a0', bannerBg: '#424242', footerBg: '#212121', footerText: '#e0e0e0', hoverBg: '#4a4a4a' }, // Black-Gray-White
-      { bgStart: '#e3f2fd', bgEnd: '#bbdefb', tabBg: '#42a5f5', tabHover: '#2196f3', thBg: '#90caf9', h1Color: '#1976d2', sidebarH2: '#1976d2', bannerBg: '#e1f5fe', footerBg: '#bbdefb', footerText: '#1976d2', hoverBg: '#cce0ff' }, // Blue
-      { bgStart: '#ffccbc', bgEnd: '#ffab91', tabBg: '#ff8a65', tabHover: '#ff7043', thBg: '#ffab91', h1Color: '#e64a19', sidebarH2: '#e64a19', bannerBg: '#ffccbc', footerBg: '#ffab91', footerText: '#e64a19', hoverBg: '#ffccbc' }, // Orange
-      { bgStart: '#b2dfdb', bgEnd: '#80cbc4', tabBg: '#4db6ac', tabHover: '#26a69a', thBg: '#80cbc4', h1Color: '#00695c', sidebarH2: '#00695c', bannerBg: '#b2dfdb', footerBg: '#80cbc4', footerText: '#00695c', hoverBg: '#a0d0cc' }, // Teal
-      { bgStart: '#d1c4e9', bgEnd: '#b39ddb', tabBg: '#9575cd', tabHover: '#7e57c2', thBg: '#b39ddb', h1Color: '#5e35b1', sidebarH2: '#5e35b1', bannerBg: '#d1c4e9', footerBg: '#b39ddb', footerText: '#5e35b1', hoverBg: '#c0b0e0' }, // Purple
-      { bgStart: '#f5f5f5', bgEnd: '#eceff1', tabBg: '#b0bec5', tabHover: '#90a4ae', thBg: '#cfd8dc', h1Color: '#455a64', sidebarH2: '#455a64', bannerBg: '#f5f5f5', footerBg: '#eceff1', footerText: '#455a64', hoverBg: '#e0e0e0' } // Pastel
+      { bgStart: '#ffe0f0', bgEnd: '#f4f7fa', tabBg: '#ff99cc', tabHover: '#ff66a3', thBg: '#ffccdd', h1Color: '#ff66a3', sidebarH2: '#ff66a3', bannerBg: '#fff0f5', footerBg: '#fce4ec', footerText: '#555', hoverBg: '#fff0f5', chatBg: 'rgba(255, 153, 204, 0.5)' }, // Pink
+      { bgStart: '#4a1e2e', bgEnd: '#2d1b24', tabBg: '#6b2d3a', tabHover: '#8a2e3b', thBg: '#7a3d4c', h1Color: '#ff4d6d', sidebarH2: '#ff4d6d', bannerBg: '#3a1e2a', footerBg: '#2d1b24', footerText: '#e0e0e0', hoverBg: '#3a2d3a', chatBg: 'rgba(107, 45, 58, 0.5)' }, // Red-Purple
+      { bgStart: '#d4e4d2', bgEnd: '#e6f0e6', tabBg: '#81c784', tabHover: '#66bb6a', thBg: '#a5d6a7', h1Color: '#2e7d32', sidebarH2: '#2e7d32', bannerBg: '#e0f0e0', footerBg: '#c8e6c9', footerText: '#2e7d32', hoverBg: '#d0e0d0', chatBg: 'rgba(129, 199, 132, 0.5)' }, // Green
+      { bgStart: '#fff9e6', bgEnd: '#fff3cc', tabBg: '#ffca28', tabHover: '#ffb300', thBg: '#ffe082', h1Color: '#f57f17', sidebarH2: '#f57f17', bannerBg: '#fffde7', footerBg: '#fff9e6', footerText: '#f57f17', hoverBg: '#fff0d0', chatBg: 'rgba(255, 202, 40, 0.5)' }, // Yellow
+      { bgStart: '#ffebee', bgEnd: '#ffcdd2', tabBg: '#ef5350', tabHover: '#e53935', thBg: '#ef9a9a', h1Color: '#c62828', sidebarH2: '#c62828', bannerBg: '#ffebee', footerBg: '#ffcdd2', footerText: '#c62828', hoverBg: '#ffd0d0', chatBg: 'rgba(239, 83, 80, 0.5)' }, // Red
+      { bgStart: '#212121', bgEnd: '#bdbdbd', tabBg: '#616161', tabHover: '#424242', thBg: '#757575', h1Color: '#ffffff', sidebarH2: '#a0a0a0', bannerBg: '#424242', footerBg: '#212121', footerText: '#e0e0e0', hoverBg: '#4a4a4a', chatBg: 'rgba(97, 97, 97, 0.5)' }, // Black-Gray-White
+      { bgStart: '#e3f2fd', bgEnd: '#bbdefb', tabBg: '#42a5f5', tabHover: '#2196f3', thBg: '#90caf9', h1Color: '#1976d2', sidebarH2: '#1976d2', bannerBg: '#e1f5fe', footerBg: '#bbdefb', footerText: '#1976d2', hoverBg: '#cce0ff', chatBg: 'rgba(66, 165, 245, 0.5)' }, // Blue
+      { bgStart: '#ffccbc', bgEnd: '#ffab91', tabBg: '#ff8a65', tabHover: '#ff7043', thBg: '#ffab91', h1Color: '#e64a19', sidebarH2: '#e64a19', bannerBg: '#ffccbc', footerBg: '#ffab91', footerText: '#e64a19', hoverBg: '#ffccbc', chatBg: 'rgba(255, 138, 101, 0.5)' }, // Orange
+      { bgStart: '#b2dfdb', bgEnd: '#80cbc4', tabBg: '#4db6ac', tabHover: '#26a69a', thBg: '#80cbc4', h1Color: '#00695c', sidebarH2: '#00695c', bannerBg: '#b2dfdb', footerBg: '#80cbc4', footerText: '#00695c', hoverBg: '#a0d0cc', chatBg: 'rgba(77, 182, 172, 0.5)' }, // Teal
+      { bgStart: '#d1c4e9', bgEnd: '#b39ddb', tabBg: '#9575cd', tabHover: '#7e57c2', thBg: '#b39ddb', h1Color: '#5e35b1', sidebarH2: '#5e35b1', bannerBg: '#d1c4e9', footerBg: '#b39ddb', footerText: '#5e35b1', hoverBg: '#c0b0e0', chatBg: 'rgba(149, 117, 205, 0.5)' }, // Purple
+      { bgStart: '#f5f5f5', bgEnd: '#eceff1', tabBg: '#b0bec5', tabHover: '#90a4ae', thBg: '#cfd8dc', h1Color: '#455a64', sidebarH2: '#455a64', bannerBg: '#f5f5f5', footerBg: '#eceff1', footerText: '#455a64', hoverBg: '#e0e0e0', chatBg: 'rgba(176, 190, 197, 0.5)' } // Pastel
     ];
 
     const sortOptions = {
@@ -1187,6 +1186,7 @@
       document.body.style.setProperty('--footer-bg', theme.footerBg);
       document.body.style.setProperty('--footer-text', theme.footerText);
       document.body.style.setProperty('--hover-bg', theme.hoverBg);
+      document.body.style.setProperty('--chat-bg', theme.chatBg);
 
       document.querySelector('.theme-menu').style.background = theme.tabBg;
       document.querySelector('.theme-menu select').style.background = theme.tabBg;
@@ -1211,6 +1211,7 @@
       document.querySelector('.waifu-of-the-day-button').style.background = theme.tabBg;
       document.querySelector('.waifu-of-the-day-button').onmouseover = () => document.querySelector('.waifu-of-the-day-button').style.background = theme.tabHover;
       document.querySelector('.waifu-of-the-day-button').onmouseout = () => document.querySelector('.waifu-of-the-day-button').style.background = theme.tabBg;
+      document.querySelector('.chat-box').style.background = theme.chatBg;
     }
 
     images[currentImageIndex].classList.add('active');
