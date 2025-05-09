@@ -33,7 +33,7 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    echo "<div class='waifu-of-the-day-title'>Waifu of the Day: " . htmlspecialchars($row["Name"]) . "</div>";
+    echo "<div class='waifu-of-the-day-header' style='text-align: center; font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--h1-color, #ff66a3);'>Waifu of the Day: " . htmlspecialchars($row["Name"]) . "</div>";
     echo "<table>";
     echo "<tr><td colspan='2'><img src='" . htmlspecialchars($row["ImageURL"]) . "' alt='Waifu Image' class='waifu-of-the-day-table-image'></td></tr>";
     echo "<tr><th>Origin</th><td>" . htmlspecialchars($row["Origin"]) . "</td></tr>";
