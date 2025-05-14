@@ -16,246 +16,40 @@
       flex-direction: row;
       position: relative;
     }
-
-    h1 {
-      text-align: center;
-      color: var(--h1-color, #ff66a3);
-      margin-bottom: 1rem;
-    }
-
-    .tabs {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 1rem;
-      gap: 1rem;
-    }
-
-    .tabs button {
-      background: var(--tab-bg, #ff99cc);
-      border: none;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .tabs button:hover {
-      background: var(--tab-hover, #ff66a3);
-    }
-
-    .search-bar {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .search-bar input {
-      padding: 0.6rem;
-      width: 250px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-
-    .results {
-      max-width: 1000px;
-      margin: auto;
-      background: white;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-
-    .results table {
-      width: 100%;
-      border-collapse: collapse;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .results table th {
-      background: var(--th-bg, #ffccdd);
-      color: var(--h1-color, #ff66a3);
-      padding: 0.5rem;
-      border-bottom: 1px solid #eee;
-      text-align: left;
-    }
-
-    .results table td {
-      padding: 0.5rem;
-      border-bottom: 1px solid #eee;
-      text-align: left;
-    }
-
-    .results table tr:hover {
-      background: var(--hover-bg, #fff0f5);
-    }
-
-    .results table td img {
-      border-radius: 6px;
-      object-fit: cover;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      width: 50px;
-      height: 50px;
-    }
-
-    .results .category-header {
-      font-weight: bold;
-      color: var(--h1-color, #ff66a3);
-      margin: 0.5rem 0;
-    }
-
-    .results table td img.waifu-of-the-day-table-image {
-      max-width: 300px;
-      width: 100%;
-      height: auto;
-      border-radius: 6px;
-      margin: 0 auto;
-      display: block;
-    }
-
-    .main-page {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-    }
-
-    .main-page .waifu-card {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      padding: 1rem;
-      text-align: center;
-      width: 200px;
-    }
-
-    .main-page .waifu-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 6px;
-    }
-
-    .main-page .waifu-card h3 {
-      color: var(--h1-color, #ff66a3);
-      margin: 0.5rem 0 0.2rem;
-      font-size: 1.2rem;
-    }
-
-    .main-page .waifu-card p {
-      color: #555;
-      margin: 0;
-      font-size: 0.9rem;
-    }
-
-    .sidebar {
-      width: 300px;
-      background: #fff;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      margin-right: 2rem;
-    }
-
-    .sidebar h2 {
-      color: var(--sidebar-h2, #ff66a3);
-      margin-top: 0;
-    }
-
-    .sidebar label {
-      display: block;
-      margin: 0.5rem 0 0.2rem;
-      color: #555;
-    }
-
-    .sidebar input, .sidebar textarea {
-      width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      margin-bottom: 1rem;
-    }
-
-    .sidebar button {
-      background: var(--tab-bg, #ff99cc);
-      border: none;
-      color: white;
-      padding: 0.75rem;
-      width: 100%;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .sidebar button:hover {
-      background: var(--tab-hover, #ff66a3);
-    }
-
-    .main-content {
-      flex: 1;
-      max-width: 1000px;
-    }
-
-    .banner-container {
-      width: 300px;
-      margin-left: 2rem;
-      text-align: center;
-    }
-
-    #image-banner {
-      width: 100%;
-      height: 600px;
-      overflow: hidden;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      background-color: var(--banner-bg, #fff0f5);
-      box-sizing: border-box;
-    }
-
-    #image-banner img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: none;
-      transition: opacity 0.5s ease-in-out;
-      padding: 10px;
-      box-sizing: border-box;
-    }
-
-    #image-banner img.active {
-      display: block;
-      opacity: 1;
-    }
-
-    .next-button, .gamble-button, .waifu-of-the-day-button {
-      background: var(--tab-bg, #ff99cc);
-      border: none;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 1rem;
-    }
-
-    .next-button:hover, .gamble-button:hover, .waifu-of-the-day-button:hover {
-      background: var(--tab-hover, #ff66a3);
-    }
-
-    .banner-text {
-      width: 100%;
-      text-align: center;
-      font-size: 0.9rem;
-      margin-top: 0.5rem;
-      max-width: 300px;
-    }
-
-    .banner-text span {
-      animation: rainbowRotate 2s infinite;
-    }
-
+    h1 { text-align: center; color: var(--h1-color, #ff66a3); margin-bottom: 1rem; }
+    .tabs { display: flex; justify-content: center; margin-bottom: 1rem; gap: 1rem; }
+    .tabs button { background: var(--tab-bg, #ff99cc); border: none; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
+    .tabs button:hover { background: var(--tab-hover, #ff66a3); }
+    .search-bar { text-align: center; margin-bottom: 2rem; }
+    .search-bar input { padding: 0.6rem; width: 250px; border: 1px solid #ccc; border-radius: 6px; }
+    .results { max-width: 1000px; margin: auto; background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .results table { width: 100%; border-collapse: collapse; border-radius: 8px; overflow: hidden; }
+    .results table th { background: var(--th-bg, #ffccdd); color: var(--h1-color, #ff66a3); padding: 0.5rem; border-bottom: 1px solid #eee; text-align: left; }
+    .results table td { padding: 0.5rem; border-bottom: 1px solid #eee; text-align: left; }
+    .results table tr:hover { background: var(--hover-bg, #fff0f5); }
+    .results table td img { border-radius: 6px; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 50px; height: 50px; }
+    .results .category-header { font-weight: bold; color: var(--h1-color, #ff66a3); margin: 0.5rem 0; }
+    .results table td img.waifu-of-the-day-table-image { max-width: 300px; width: 100%; height: auto; border-radius: 6px; margin: 0 auto; display: block; }
+    .main-page { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+    .main-page .waifu-card { background: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 1rem; text-align: center; width: 200px; }
+    .main-page .waifu-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 6px; }
+    .main-page .waifu-card h3 { color: var(--h1-color, #ff66a3); margin: 0.5rem 0 0.2rem; font-size: 1.2rem; }
+    .main-page .waifu-card p { color: #555; margin: 0; font-size: 0.9rem; }
+    .sidebar { width: 300px; background: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-right: 2rem; }
+    .sidebar h2 { color: var(--sidebar-h2, #ff66a3); margin-top: 0; }
+    .sidebar label { display: block; margin: 0.5rem 0 0.2rem; color: #555; }
+    .sidebar input, .sidebar textarea { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 1rem; }
+    .sidebar button { background: var(--tab-bg, #ff99cc); border: none; color: white; padding: 0.75rem; width: 100%; border-radius: 8px; cursor: pointer; transition: background 0.2s; }
+    .sidebar button:hover { background: var(--tab-hover, #ff66a3); }
+    .main-content { flex: 1; max-width: 1000px; }
+    .banner-container { width: 300px; margin-left: 2rem; text-align: center; }
+    #image-banner { width: 100%; height: 600px; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); background-color: var(--banner-bg, #fff0f5); box-sizing: border-box; }
+    #image-banner img { width: 100%; height: 100%; object-fit: contain; display: none; transition: opacity 0.5s ease-in-out; padding: 10px; box-sizing: border-box; }
+    #image-banner img.active { display: block; opacity: 1; }
+    .next-button, .gamble-button, .waifu-of-the-day-button { background: var(--tab-bg, #ff99cc); border: none; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: background 0.2s; margin-top: 1rem; }
+    .next-button:hover, .gamble-button:hover, .waifu-of-the-day-button:hover { background: var(--tab-hover, #ff66a3); }
+    .banner-text { width: 100%; text-align: center; font-size: 0.9rem; margin-top: 0.5rem; max-width: 300px; }
+    .banner-text span { animation: rainbowRotate 2s infinite; }
     .banner-text span:nth-child(1) { animation-delay: 0s; }
     .banner-text span:nth-child(2) { animation-delay: 0.1s; }
     .banner-text span:nth-child(3) { animation-delay: 0.2s; }
@@ -276,149 +70,31 @@
     .banner-text span:nth-child(18) { animation-delay: 1.7s; }
     .banner-text span:nth-child(19) { animation-delay: 1.8s; }
     .banner-text span:nth-child(20) { animation-delay: 1.9s; }
-
     @keyframes rainbowRotate {
-      0% { color: red; }
-      20% { color: orange; }
-      40% { color: yellow; }
-      60% { color: green; }
-      80% { color: blue; }
-      100% { color: purple; }
+      0% { color: red; } 20% { color: orange; } 40% { color: yellow; } 60% { color: green; } 80% { color: blue; } 100% { color: purple; }
     }
-
-    .waifu-of-the-day-button {
-      width: 100%;
-      max-width: 300px;
-    }
-
-    #waifu-of-the-day-image {
-      margin-top: 1rem;
-      max-width: 300px;
-      border-radius: 6px;
-      display: none;
-    }
-
-    .waifu-of-the-day-header {
-      text-align: center;
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-      color: var(--h1-color, #ff66a3);
-    }
-
-    .chat-box {
-      width: 100%;
-      max-width: 1000px;
-      margin: 2rem auto;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      background: var(--chat-bg, rgba(255, 153, 204, 0.5));
-    }
-
-    .chat-box h2 {
-      color: var(--h1-color, #ff66a3);
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-
-    .chat-message {
-      padding: 0.5rem;
-      border-bottom: 1px solid #eee;
-    }
-
-    .chat-message:last-child {
-      border-bottom: none;
-    }
-
-    .chat-message strong {
-      color: var(--h1-color, #ff66a3);
-    }
-
-    footer {
-      background-color: var(--footer-bg, #fce4ec);
-      padding: 1.5rem;
-      text-align: center;
-      font-size: 0.9rem;
-      color: var(--footer-text, #555);
-      width: 100%;
-      position: relative;
-      margin-top: auto;
-      border-top: 1px solid #ddd;
-    }
-
-    footer a {
-      color: #d81b60;
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: space-around;
-      max-width: 600px;
-      margin: 0 auto 1rem;
-      flex-wrap: wrap;
-    }
-
-    .footer-links div {
-      margin: 0 1rem;
-    }
-
-    .footer-links a {
-      display: block;
-      color: var(--footer-text, #555);
-      text-decoration: none;
-      margin: 0.5rem 0;
-    }
-
-    .footer-links a:hover {
-      text-decoration: underline;
-    }
-
-    .form-section {
-      display: none;
-    }
-
-    .form-section.active {
-      display: block;
-    }
-
-    .theme-menu {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: var(--tab-bg, #ff99cc);
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 0.5rem;
-      cursor: pointer;
-    }
-
-    .theme-menu select {
-      background: var(--tab-bg, #ff99cc);
-      border: none;
-      font-size: 1rem;
-      color: white;
-      cursor: pointer;
-      padding: 0.25rem;
-    }
-
-    .theme-menu select:hover {
-      background: var(--tab-hover, #ff66a3);
-    }
-
-    .mode-toggle {
-      margin-bottom: 1rem;
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .mode-toggle button {
-      flex: 1;
-    }
+    .waifu-of-the-day-button { width: 100%; max-width: 300px; }
+    #waifu-of-the-day-image { margin-top: 1rem; max-width: 300px; border-radius: 6px; display: none; }
+    .waifu-of-the-day-header { text-align: center; font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--h1-color, #ff66a3); }
+    .chat-box { width: 100%; max-width: 1000px; margin: 2rem auto; padding: 1rem; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); background: var(--chat-bg, rgba(255, 153, 204, 0.5)); }
+    .chat-box h2 { color: var(--h1-color, #ff66a3); text-align: center; margin-bottom: 1rem; }
+    .chat-message { padding: 0.5rem; border-bottom: 1px solid #eee; }
+    .chat-message:last-child { border-bottom: none; }
+    .chat-message strong { color: var(--h1-color, #ff66a3); }
+    footer { background-color: var(--footer-bg, #fce4ec); padding: 1.5rem; text-align: center; font-size: 0.9rem; color: var(--footer-text, #555); width: 100%; position: relative; margin-top: auto; border-top: 1px solid #ddd; }
+    footer a { color: #d81b60; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .footer-links { display: flex; justify-content: space-around; max-width: 600px; margin: 0 auto 1rem; flex-wrap: wrap; }
+    .footer-links div { margin: 0 1rem; }
+    .footer-links a { display: block; color: var(--footer-text, #555); text-decoration: none; margin: 0.5rem 0; }
+    .footer-links a:hover { text-decoration: underline; }
+    .form-section { display: none; }
+    .form-section.active { display: block; }
+    .theme-menu { position: absolute; top: 1rem; right: 1rem; background: var(--tab-bg, #ff99cc); border: 1px solid #ccc; border-radius: 8px; padding: 0.5rem; cursor: pointer; }
+    .theme-menu select { background: var(--tab-bg, #ff99cc); border: none; font-size: 1rem; color: white; cursor: pointer; padding: 0.25rem; }
+    .theme-menu select:hover { background: var(--tab-hover, #ff66a3); }
+    .form-section h3 { color: var(--sidebar-h2, #ff66a3); margin: 0.5rem 0; }
+    .form-section .section { margin-bottom: 1rem; padding: 1rem; border: 1px solid #ccc; border-radius: 6px; }
   </style>
 </head>
 <body>
@@ -437,43 +113,83 @@
       <option value="10">Pastel</option>
     </select>
   </div>
-
   <div class="sidebar">
-    <div id="waifu-form" class="form-section active">
-      <div class="mode-toggle">
-        <button type="button" onclick="toggleWaifuMode('add')">Add Mode</button>
-        <button type="button" onclick="toggleWaifuMode('update')">Change Mode</button>
-      </div>
-
-      <div id="waifu-id-input" style="display: none;">
-        <label for="waifuID">Waifu ID</label>
-        <input type="number" id="waifuID" min="1" required />
-        <button type="button" onclick="fetchWaifuData()">Load Waifu</button>
-      </div>
-
-      <div id="add-waifu-section">
-        <h2>Add Waifu</h2>
-        <form id="add-waifu-form">
-          <label for="waifuName">Name</label>
-          <input type="text" id="waifuName" required />
-          <label for="waifuOrigin">Origin</label>
-          <input type="text" id="waifuOrigin" required />
-          <label for="waifuPersonality">Personality</label>
-          <textarea id="waifuPersonality" required></textarea>
-          <label for="waifuAppearance">Appearance</label>
-          <textarea id="waifuAppearance" required></textarea>
-          <label for="waifuPopularity">Popularity</label>
-          <input type="number" id="waifuPopularity" min="0" max="10" step="0.1" required />
-          <label for="waifuMedia">Media</label>
-          <input type="text" id="waifuMedia" />
-          <label for="waifuVoiceActor">Voice Actor</label>
-          <input type="text" id="waifuVoiceActor" />
-          <label for="waifuImage">Image URL</label>
-          <input type="url" id="waifuImage" required />
-          <button type="button" id="waifuSubmitButton" onclick="addWaifu()">Add Waifu</button>
-        </form>
-      </div>
-
+    <div id="add-entry-form" class="form-section active">
+      <h2>Add New Entry</h2>
+      <form id="add-entry" action="/actions/add_waifu.php" method="POST">
+        <div class="section">
+          <h3>Waifu</h3>
+          <label for="waifuName">Name *</label>
+          <input type="text" id="waifuName" name="waifuName" required />
+          <label for="waifuOrigin">Origin *</label>
+          <input type="text" id="waifuOrigin" name="waifuOrigin" required />
+          <label for="waifuPersonality">Personality *</label>
+          <textarea id="waifuPersonality" name="waifuPersonality" required></textarea>
+          <label for="waifuAppearance">Appearance *</label>
+          <textarea id="waifuAppearance" name="waifuAppearance" required></textarea>
+          <label for="waifuPopularity">Popularity (0.0-99.9) *</label>
+          <input type="number" id="waifuPopularity" name="waifuPopularity" min="0" max="99.9" step="0.1" required />
+        </div>
+        <div class="section">
+          <h3>Studio</h3>
+          <label for="studioName">Name</label>
+          <input type="text" id="studioName" name="studioName" />
+          <label for="studioLocation">Location</label>
+          <input type="text" id="studioLocation" name="studioLocation" />
+          <label for="studioFoundedYear">Founded Year</label>
+          <input type="number" id="studioFoundedYear" name="studioFoundedYear" />
+        </div>
+        <div class="section">
+          <h3>Media</h3>
+          <label for="mediaTitle">Title</label>
+          <input type="text" id="mediaTitle" name="mediaTitle" />
+          <label for="mediaType">Type</label>
+          <input type="text" id="mediaType" name="mediaType" />
+          <label for="mediaReleaseYear">Release Year</label>
+          <input type="number" id="mediaReleaseYear" name="mediaReleaseYear" />
+        </div>
+        <div class="section">
+          <h3>Voice Actor</h3>
+          <label for="voiceName">Name</label>
+          <input type="text" id="voiceName" name="voiceName" />
+          <label for="voiceNationality">Nationality</label>
+          <input type="text" id="voiceNationality" name="voiceNationality" />
+          <label for="voiceAgency">Agency</label>
+          <input type="text" id="voiceAgency" name="voiceAgency" />
+        </div>
+        <div class="section">
+          <h3>Fandom</h3>
+          <label for="fandomFanClubName">Fan Club Name</label>
+          <input type="text" id="fandomFanClubName" name="fandomFanClubName" />
+          <label for="fandomMemberCount">Member Count</label>
+          <input type="number" id="fandomMemberCount" name="fandomMemberCount" />
+          <label for="fandomPlatform">Platform</label>
+          <input type="text" id="fandomPlatform" name="fandomPlatform" />
+        </div>
+        <div class="section">
+          <h3>Ability</h3>
+          <label for="abilityName">Name</label>
+          <input type="text" id="abilityName" name="abilityName" />
+          <label for="abilityDescription">Description</label>
+          <textarea id="abilityDescription" name="abilityDescription"></textarea>
+          <label for="abilityType">Type</label>
+          <input type="text" id="abilityType" name="abilityType" />
+        </div>
+        <div class="section">
+          <h3>Merchandise</h3>
+          <label for="merchName">Name</label>
+          <input type="text" id="merchName" name="merchName" />
+          <label for="merchType">Type</label>
+          <input type="text" id="merchType" name="merchType" />
+          <label for="merchPrice">Price</label>
+          <input type="number" id="merchPrice" name="merchPrice" step="0.01" />
+          <label for="merchReleaseDate">Release Date</label>
+          <input type="date" id="merchReleaseDate" name="merchReleaseDate" />
+        </div>
+        <button type="submit">Add Entry</button>
+      </form>
+    </div>
+    <div id="waifu-form" class="form-section">
       <h2>Delete Waifu</h2>
       <form id="delete-waifu-form">
         <label for="waifuIdentifier">Waifu ID or Name</label>
@@ -482,18 +198,6 @@
       </form>
     </div>
     <div id="media-form" class="form-section">
-      <h2>Add Media</h2>
-      <form id="add-media-form">
-        <label for="mediaTitle">Title</label>
-        <input type="text" id="mediaTitle" required />
-        <label for="mediaType">Type</label>
-        <input type="text" id="mediaType" />
-        <label for="mediaReleaseYear">Release Year</label>
-        <input type="number" id="mediaReleaseYear" />
-        <label for="mediaStudio">Studio ID</label>
-        <input type="text" id="mediaStudio" />
-        <button type="button" onclick="addMedia()">Add Media</button>
-      </form>
       <h2>Delete Media</h2>
       <form id="delete-media-form">
         <label for="mediaIdentifier">Media ID or Title</label>
@@ -502,16 +206,6 @@
       </form>
     </div>
     <div id="studio-form" class="form-section">
-      <h2>Add Studio</h2>
-      <form id="add-studio-form">
-        <label for="studioName">Name</label>
-        <input type="text" id="studioName" required />
-        <label for="studioLocation">Location</label>
-        <input type="text" id="studioLocation" />
-        <label for="studioFoundedYear">Founded Year</label>
-        <input type="number" id="studioFoundedYear" />
-        <button type="button" onclick="addStudio()">Add Studio</button>
-      </form>
       <h2>Delete Studio</h2>
       <form id="delete-studio-form">
         <label for="studioIdentifier">Studio ID or Name</label>
@@ -520,16 +214,6 @@
       </form>
     </div>
     <div id="voice-form" class="form-section">
-      <h2>Add Voice Actor</h2>
-      <form id="add-voice-form">
-        <label for="voiceName">Name</label>
-        <input type="text" id="voiceName" required />
-        <label for="voiceNationality">Nationality</label>
-        <input type="text" id="voiceNationality" />
-        <label for="voiceAgency">Agency</label>
-        <input type="text" id="voiceAgency" />
-        <button type="button" onclick="addVoiceActor()">Add Voice Actor</button>
-      </form>
       <h2>Delete Voice Actor</h2>
       <form id="delete-voice-form">
         <label for="voiceIdentifier">Voice Actor ID or Name</label>
@@ -538,18 +222,6 @@
       </form>
     </div>
     <div id="fandom-form" class="form-section">
-      <h2>Add Fandom</h2>
-      <form id="add-fandom-form">
-        <label for="fandomWaifuID">Waifu ID</label>
-        <input type="text" id="fandomWaifuID" />
-        <label for="fandomFanClubName">Fan Club Name</label>
-        <input type="text" id="fandomFanClubName" required />
-        <label for="fandomMemberCount">Member Count</label>
-        <input type="number" id="fandomMemberCount" />
-        <label for="fandomPlatform">Platform</label>
-        <input type="text" id="fandomPlatform" />
-        <button type="button" onclick="addFandom()">Add Fandom</button>
-      </form>
       <h2>Delete Fandom</h2>
       <form id="delete-fandom-form">
         <label for="fandomIdentifier">Fandom ID or Fan Club Name</label>
@@ -558,18 +230,6 @@
       </form>
     </div>
     <div id="abilities-form" class="form-section">
-      <h2>Add Ability</h2>
-      <form id="add-abilities-form">
-        <label for="abilityWaifuID">Waifu ID</label>
-        <input type="text" id="abilityWaifuID" />
-        <label for="abilityName">Name</label>
-        <input type="text" id="abilityName" required />
-        <label for="abilityDescription">Description</label>
-        <textarea id="abilityDescription"></textarea>
-        <label for="abilityType">Type</label>
-        <input type="text" id="abilityType" />
-        <button type="button" onclick="addAbility()">Add Ability</button>
-      </form>
       <h2>Delete Ability</h2>
       <form id="delete-abilities-form">
         <label for="abilityIdentifier">Ability ID or Name</label>
@@ -577,39 +237,7 @@
         <button type="button" onclick="deleteAbility()">Delete Ability</button>
       </form>
     </div>
-    <div id="events-form" class="form-section">
-      <h2>Add Event</h2>
-      <form id="add-events-form">
-        <label for="eventName">Name</label>
-        <input type="text" id="eventName" required />
-        <label for="eventLocation">Location</label>
-        <input type="text" id="eventLocation" />
-        <label for="eventDate">Date</label>
-        <input type="date" id="eventDate" />
-        <button type="button" onclick="addEvent()">Add Event</button>
-      </form>
-      <h2>Delete Event</h2>
-      <form id="delete-events-form">
-        <label for="eventIdentifier">Event ID or Name</label>
-        <input type="text" id="eventIdentifier" required />
-        <button type="button" onclick="deleteEvent()">Delete Event</button>
-      </form>
-    </div>
     <div id="merchandise-form" class="form-section">
-      <h2>Add Merchandise</h2>
-      <form id="add-merchandise-form">
-        <label for="merchWaifuID">Waifu ID</label>
-        <input type="text" id="merchWaifuID" />
-        <label for="merchName">Name</label>
-        <input type="text" id="merchName" required />
-        <label for="merchType">Type</label>
-        <input type="text" id="merchType" />
-        <label for="merchPrice">Price</label>
-        <input type="number" id="merchPrice" step="0.01" />
-        <label for="merchReleaseDate">Release Date</label>
-        <input type="date" id="merchReleaseDate" />
-        <button type="button" onclick="addMerchandise()">Add Merchandise</button>
-      </form>
       <h2>Delete Merchandise</h2>
       <form id="delete-merchandise-form">
         <label for="merchIdentifier">Merchandise ID or Name</label>
@@ -626,7 +254,6 @@
       <p>No actions available for this tab.</p>
     </div>
   </div>
-
   <div class="main-content">
     <h1>Waifu Database</h1>
     <div class="tabs">
@@ -637,8 +264,8 @@
       <button data-tab="voice">Voice Actors</button>
       <button data-tab="fandom">Fandom</button>
       <button data-tab="abilities">Abilities</button>
-      <button data-tab="events">Events</button>
       <button data-tab="merchandise">Merchandise</button>
+      <button data-tab="add-entry">Add Entry</button>
     </div>
     <div class="search-bar">
       <input type="text" id="searchInput" placeholder="Search..." />
@@ -646,7 +273,6 @@
     </div>
     <div class="results" id="results"></div>
   </div>
-
   <div class="banner-container">
     <div id="image-banner">
       <img src="/images/waifu1.jpg" alt="Waifu Character 1">
@@ -668,7 +294,6 @@
     <button class="waifu-of-the-day-button" data-tab="waifu-of-the-day" onclick="loadData('waifu-of-the-day')">Waifu of the Day</button>
     <img id="waifu-of-the-day-image" alt="Waifu of the Day">
   </div>
-
   <div class="chat-box">
     <h2>Community Chat</h2>
     <div class="chat-message"><strong>AnimeFan123:</strong> Just saw the new waifu of the day, she's amazing! 😍</div>
@@ -677,7 +302,6 @@
     <div class="chat-message"><strong>KawaiiGirl:</strong> I wish they had more events listed, would love to attend one!</div>
     <div class="chat-message"><strong>GamerSenpai:</strong> This database is the best, keep up the great work!</div>
   </div>
-
   <footer>
     <div class="footer-links">
       <div>
@@ -703,13 +327,10 @@
       E-Mail: <a href="mailto:sigma@fortnite.de">sigma@fortnite.de</a></p>
     </div>
   </footer>
-
   <script>
     let currentTab = 'main';
     let searchInput, sortSelect;
     let themeIndex = 0;
-    let waifuMode = 'add';
-
     const themes = [
       { bgStart: '#ffe0f0', bgEnd: '#f4f7fa', tabBg: '#ff99cc', tabHover: '#ff66a3', thBg: '#ffccdd', h1Color: '#ff66a3', sidebarH2: '#ff66a3', bannerBg: '#fff0f5', footerBg: '#fce4ec', footerText: '#555', hoverBg: '#fff0f5', chatBg: 'rgba(255, 153, 204, 0.5)' },
       { bgStart: '#4a1e2e', bgEnd: '#2d1b24', tabBg: '#6b2d3a', tabHover: '#8a2e3b', thBg: '#7a3d4c', h1Color: '#ff4d6d', sidebarH2: '#ff4d6d', bannerBg: '#3a1e2a', footerBg: '#2d1b24', footerText: '#e0e0e0', hoverBg: '#3a2d3a', chatBg: 'rgba(107, 45, 58, 0.5)' },
@@ -723,7 +344,6 @@
       { bgStart: '#d1c4e9', bgEnd: '#b39ddb', tabBg: '#9575cd', tabHover: '#7e57c2', thBg: '#b39ddb', h1Color: '#5e35b1', sidebarH2: '#5e35b1', bannerBg: '#d1c4e9', footerBg: '#b39ddb', footerText: '#5e35b1', hoverBg: '#c0b0e0', chatBg: 'rgba(149, 117, 205, 0.5)' },
       { bgStart: '#f5f5f5', bgEnd: '#eceff1', tabBg: '#b0bec5', tabHover: '#90a4ae', thBg: '#cfd8dc', h1Color: '#455a64', sidebarH2: '#455a64', bannerBg: '#f5f5f5', footerBg: '#eceff1', footerText: '#455a64', hoverBg: '#e0e0e0', chatBg: 'rgba(176, 190, 197, 0.5)' }
     ];
-
     const sortOptions = {
       main: [
         { value: "id_asc", text: "ID ↑" },
@@ -761,12 +381,6 @@
         { value: "type", text: "Type" },
         { value: "name", text: "Name" }
       ],
-      events: [
-        { value: "id_asc", text: "ID ↑" },
-        { value: "id_desc", text: "ID ↓" },
-        { value: "date_desc", text: "Date ↓" },
-        { value: "date_asc", text: "Date ↑" }
-      ],
       merchandise: [
         { value: "id_asc", text: "ID ↑" },
         { value: "id_desc", text: "ID ↓" },
@@ -776,7 +390,6 @@
         { value: "release_asc", text: "Release Date ↑" }
       ]
     };
-
     let sortPerTab = {
       main: "id_asc",
       waifu: "id_asc",
@@ -785,30 +398,29 @@
       voice: "id_asc",
       fandom: "id_asc",
       abilities: "id_asc",
-      events: "id_asc",
       merchandise: "id_asc",
-      'waifu-of-the-day': ""
+      'waifu-of-the-day': "",
+      'add-entry': ""
     };
-
     function showForm(tab) {
       const formSection = document.getElementById(`${tab}-form`);
       if (!formSection) return;
       document.querySelectorAll('.form-section').forEach(section => section.classList.remove('active'));
       formSection.classList.add('active');
     }
-
     function loadData(tab, isPreload = false) {
       if (!isPreload) {
         currentTab = tab;
         showForm(tab);
       }
-
+      if (tab === 'add-entry') {
+        document.getElementById('results').innerHTML = '<p>Please use the Add Entry form to add new data.</p>';
+        return;
+      }
       const search = searchInput.value;
       const sort = sortPerTab[tab] || "id_asc";
       const resultsDiv = document.getElementById("results");
-
       if (!isPreload) resultsDiv.innerHTML = "<p>Loading...</p>";
-
       sortSelect.innerHTML = "";
       if (sortOptions[tab]) {
         sortOptions[tab].forEach(opt => {
@@ -824,11 +436,7 @@
         option.textContent = "Sort by...";
         sortSelect.appendChild(option);
       }
-
-      const url = (tab === 'waifu-of-the-day')
-        ? `/api/waifu-of-the-day.php`
-        : `/api/${tab === 'main' ? 'waifu' : tab}.php?search=${encodeURIComponent(search)}&sort=${sort}`;
-
+      const url = `/api/data.php?tab=${tab}&search=${encodeURIComponent(search)}&sort=${sort}`;
       fetch(url, { cache: 'no-store' })
         .then(res => {
           if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
@@ -854,7 +462,8 @@
               const cells = row.querySelectorAll('td');
               const name = cells[1].textContent;
               const origin = cells[2].textContent;
-              const imgSrc = cells[8].querySelector('img') ? cells[8].querySelector('img').src : '';
+              // Placeholder image for main tab cards
+              const imgSrc = '/images/default.jpg';
               mainHtml += `
                 <div class="waifu-card">
                   <img src="${imgSrc}" alt="${name}">
@@ -874,51 +483,6 @@
           console.error(err);
         });
     }
-
-    function addEntry(tab, formId, data, endpoint) {
-      fetch(`/actions/add/${endpoint}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === 'success') {
-            alert(`${tab} added successfully!`);
-            loadData(tab.toLowerCase());
-            document.getElementById(formId).reset();
-          } else {
-            alert(`Error adding ${tab.toLowerCase()}: ${data.message}`);
-          }
-        })
-        .catch(err => {
-          alert(`Error adding ${tab.toLowerCase()}.`);
-          console.error(err);
-        });
-    }
-
-    function updateEntry(tab, formId, data, endpoint) {
-      fetch(`/actions/update/${endpoint}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === 'success') {
-            alert(`${tab} updated successfully!`);
-            loadData(tab.toLowerCase());
-            toggleWaifuMode('add');
-          } else {
-            alert(`Error updating ${tab.toLowerCase()}: ${data.message}`);
-          }
-        })
-        .catch(err => {
-          alert(`Error updating ${tab.toLowerCase()}.`);
-          console.error(err);
-        });
-    }
-
     function deleteEntry(tab, formId, identifier, endpoint) {
       fetch(`/actions/delete/${endpoint}`, {
         method: 'POST',
@@ -940,248 +504,42 @@
           console.error(err);
         });
     }
-
-    function toggleWaifuMode(mode) {
-      waifuMode = mode;
-      const waifuIdInput = document.getElementById('waifu-id-input');
-      const addWaifuSection = document.getElementById('add-waifu-section');
-      const waifuSubmitButton = document.getElementById('waifuSubmitButton');
-      const formTitle = addWaifuSection.querySelector('h2');
-
-      // Remove any existing Abort button in both modes
-      let existingAbort = addWaifuSection.querySelector('button[onclick="abortChange()"]');
-      if (existingAbort) addWaifuSection.removeChild(existingAbort);
-
-      if (mode === 'update') {
-        waifuIdInput.style.display = 'block';
-        addWaifuSection.style.display = 'none';
-        formTitle.textContent = 'Change Waifu';
-        waifuSubmitButton.textContent = 'Update Waifu';
-        waifuSubmitButton.onclick = updateWaifu;
-      } else {
-        waifuIdInput.style.display = 'none';
-        addWaifuSection.style.display = 'block';
-        formTitle.textContent = 'Add Waifu';
-        waifuSubmitButton.textContent = 'Add Waifu';
-        waifuSubmitButton.onclick = addWaifu;
-        document.getElementById('add-waifu-form').reset();
-      }
-    }
-
-    function fetchWaifuData() {
-      const waifuID = document.getElementById('waifuID').value;
-      if (!waifuID) {
-        alert('Please enter a Waifu ID.');
-        return;
-      }
-
-      fetch(`/api/waifu.php?search=${waifuID}&sort=id_asc`)
-        .then(res => {
-          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-          return res.text();
-        })
-        .then(html => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, 'text/html');
-          const row = doc.querySelector('tbody tr');
-
-          if (!row) {
-            alert('Waifu not found.');
-            return;
-          }
-
-          const cells = row.querySelectorAll('td');
-          if (cells.length < 9) {
-            alert('Incomplete waifu data returned.');
-            console.log('HTML Response:', html);
-            return;
-          }
-
-          document.getElementById('waifuName').value = cells[1].textContent || '';
-          document.getElementById('waifuOrigin').value = cells[2].textContent || '';
-          document.getElementById('waifuPersonality').value = cells[3].textContent || '';
-          document.getElementById('waifuAppearance').value = cells[4].textContent || '';
-          document.getElementById('waifuPopularity').value = cells[5].textContent || '';
-          document.getElementById('waifuMedia').value = cells[6].textContent === 'N/A' ? '' : cells[6].textContent;
-          document.getElementById('waifuVoiceActor').value = cells[7].textContent === 'N/A' ? '' : cells[7].textContent;
-          let imgSrc = cells[8].querySelector('img') ? cells[8].querySelector('img').src : '';
-          document.getElementById('waifuImage').value = imgSrc.replace(/^.*\/images\//, '') || '';
-
-          const addWaifuSection = document.getElementById('add-waifu-section');
-          document.getElementById('waifu-id-input').style.display = 'none';
-          addWaifuSection.style.display = 'block';
-
-          // Remove existing Abort button if present
-          let existingAbort = addWaifuSection.querySelector('button[onclick="abortChange()"]');
-          if (existingAbort) addWaifuSection.removeChild(existingAbort);
-
-          // Add Abort button after loading waifu data
-          let abortButton = document.createElement('button');
-          abortButton.type = 'button';
-          abortButton.textContent = 'Abort';
-          abortButton.setAttribute('onclick', 'abortChange()');
-          addWaifuSection.insertBefore(abortButton, addWaifuSection.querySelector('form'));
-        })
-        .catch(err => {
-          alert('Error fetching waifu data: ' + err.message);
-          console.error(err);
-        });
-    }
-
-    function abortChange() {
-      const addWaifuSection = document.getElementById('add-waifu-section');
-      let existingAbort = addWaifuSection.querySelector('button[onclick="abortChange()"]');
-      if (existingAbort) addWaifuSection.removeChild(existingAbort);
-      toggleWaifuMode('add');
-    }
-
-    function addWaifu() {
-      const waifu = {
-        name: document.getElementById('waifuName').value.trim(),
-        origin: document.getElementById('waifuOrigin').value.trim(),
-        personality: document.getElementById('waifuPersonality').value.trim(),
-        appearance: document.getElementById('waifuAppearance').value.trim(),
-        popularity: document.getElementById('waifuPopularity').value,
-        media: document.getElementById('waifuMedia').value.trim(),
-        voiceActor: document.getElementById('waifuVoiceActor').value.trim(),
-        imageURL: document.getElementById('waifuImage').value.trim()
-      };
-      addEntry('Waifu', 'add-waifu-form', waifu, 'add_waifu.php');
-    }
-
-    function updateWaifu() {
-      const waifu = {
-        id: document.getElementById('waifuID').value,
-        name: document.getElementById('waifuName').value.trim(),
-        origin: document.getElementById('waifuOrigin').value.trim(),
-        personality: document.getElementById('waifuPersonality').value.trim(),
-        appearance: document.getElementById('waifuAppearance').value.trim(),
-        popularity: document.getElementById('waifuPopularity').value,
-        media: document.getElementById('waifuMedia').value.trim(),
-        voiceActor: document.getElementById('waifuVoiceActor').value.trim(),
-        imageURL: document.getElementById('waifuImage').value.trim()
-      };
-      updateEntry('Waifu', 'add-waifu-form', waifu, 'update_waifu.php');
-    }
-
     function deleteWaifu() {
       const identifier = document.getElementById('waifuIdentifier').value.trim();
       deleteEntry('Waifu', 'delete-waifu-form', identifier, 'delete_waifu.php');
     }
-
-    function addMedia() {
-      const media = {
-        title: document.getElementById('mediaTitle').value.trim(),
-        type: document.getElementById('mediaType').value.trim(),
-        releaseYear: document.getElementById('mediaReleaseYear').value,
-        studioID: document.getElementById('mediaStudio').value.trim()
-      };
-      addEntry('Media', 'add-media-form', media, 'add_media.php');
-    }
-
     function deleteMedia() {
       const identifier = document.getElementById('mediaIdentifier').value.trim();
       deleteEntry('Media', 'delete-media-form', identifier, 'delete_media.php');
     }
-
-    function addStudio() {
-      const studio = {
-        name: document.getElementById('studioName').value.trim(),
-        location: document.getElementById('studioLocation').value.trim(),
-        foundedYear: document.getElementById('studioFoundedYear').value
-      };
-      addEntry('Studio', 'add-studio-form', studio, 'add_studio.php');
-    }
-
     function deleteStudio() {
       const identifier = document.getElementById('studioIdentifier').value.trim();
       deleteEntry('Studio', 'delete-studio-form', identifier, 'delete_studio.php');
     }
-
-    function addVoiceActor() {
-      const voiceActor = {
-        name: document.getElementById('voiceName').value.trim(),
-        nationality: document.getElementById('voiceNationality').value.trim(),
-        agency: document.getElementById('voiceAgency').value.trim()
-      };
-      addEntry('Voice Actor', 'add-voice-form', voiceActor, 'add_voiceactor.php');
-    }
-
     function deleteVoiceActor() {
       const identifier = document.getElementById('voiceIdentifier').value.trim();
       deleteEntry('Voice Actor', 'delete-voice-form', identifier, 'delete_voiceactor.php');
     }
-
-    function addFandom() {
-      const fandom = {
-        waifuID: document.getElementById('fandomWaifuID').value.trim(),
-        fanClubName: document.getElementById('fandomFanClubName').value.trim(),
-        memberCount: document.getElementById('fandomMemberCount').value,
-        platform: document.getElementById('fandomPlatform').value.trim()
-      };
-      addEntry('Fandom', 'add-fandom-form', fandom, 'add_fandom.php');
-    }
-
     function deleteFandom() {
       const identifier = document.getElementById('fandomIdentifier').value.trim();
       deleteEntry('Fandom', 'delete-fandom-form', identifier, 'delete_fandom.php');
     }
-
-    function addAbility() {
-      const ability = {
-        waifuID: document.getElementById('abilityWaifuID').value.trim(),
-        name: document.getElementById('abilityName').value.trim(),
-        description: document.getElementById('abilityDescription').value.trim(),
-        type: document.getElementById('abilityType').value.trim()
-      };
-      addEntry('Ability', 'add-abilities-form', ability, 'add_ability.php');
-    }
-
     function deleteAbility() {
       const identifier = document.getElementById('abilityIdentifier').value.trim();
       deleteEntry('Ability', 'delete-abilities-form', identifier, 'delete_ability.php');
     }
-
-    function addEvent() {
-      const event = {
-        name: document.getElementById('eventName').value.trim(),
-        location: document.getElementById('eventLocation').value.trim(),
-        date: document.getElementById('eventDate').value
-      };
-      addEntry('Event', 'add-events-form', event, 'add_event.php');
-    }
-
-    function deleteEvent() {
-      const identifier = document.getElementById('eventIdentifier').value.trim();
-      deleteEntry('Event', 'delete-events-form', identifier, 'delete_event.php');
-    }
-
-    function addMerchandise() {
-      const merchandise = {
-        waifuID: document.getElementById('merchWaifuID').value.trim(),
-        name: document.getElementById('merchName').value.trim(),
-        type: document.getElementById('merchType').value.trim(),
-        price: document.getElementById('merchPrice').value,
-        releaseDate: document.getElementById('merchReleaseDate').value
-      };
-      addEntry('Merchandise', 'add-merchandise-form', merchandise, 'add_merchandise.php');
-    }
-
     function deleteMerchandise() {
       const identifier = document.getElementById('merchIdentifier').value.trim();
       deleteEntry('Merchandise', 'delete-merchandise-form', identifier, 'delete_merchandise.php');
     }
-
     const images = document.querySelectorAll('#image-banner img');
     let currentImageIndex = 0;
     let rotationInterval;
-
     function rotateImages() {
       images[currentImageIndex].classList.remove('active');
       currentImageIndex = (currentImageIndex + 1) % images.length;
       images[currentImageIndex].classList.add('active');
     }
-
     function gambleImage() {
       images[currentImageIndex].classList.remove('active');
       let newIndex;
@@ -1192,17 +550,14 @@
       images[currentImageIndex].classList.add('active');
       startRotation();
     }
-
     function startRotation() {
       clearInterval(rotationInterval);
       rotationInterval = setInterval(rotateImages, 10000);
     }
-
     function skipImage() {
       rotateImages();
       startRotation();
     }
-
     function changeTheme(index) {
       themeIndex = parseInt(index);
       const theme = themes[themeIndex];
@@ -1218,11 +573,9 @@
       document.body.style.setProperty('--footer-text', theme.footerText);
       document.body.style.setProperty('--hover-bg', theme.hoverBg);
       document.body.style.setProperty('--chat-bg', theme.chatBg);
-
       document.querySelector('.theme-menu').style.background = theme.tabBg;
       document.querySelector('.theme-menu select').style.background = theme.tabBg;
       document.querySelector('.theme-menu select').style.color = '#fff';
-
       document.querySelectorAll('.tabs button, .sidebar button, .next-button, .gamble-button, .waifu-of-the-day-button').forEach(btn => {
         btn.style.background = theme.tabBg;
         btn.onmouseover = () => btn.style.background = theme.tabHover;
@@ -1230,24 +583,19 @@
       });
       document.querySelector('.chat-box').style.background = theme.chatBg;
     }
-
     images[currentImageIndex].classList.add('active');
     startRotation();
-
     window.onload = () => {
       searchInput = document.getElementById("searchInput");
       sortSelect = document.getElementById("sortSelect");
-
       searchInput.addEventListener("input", () => loadData(currentTab));
       sortSelect.addEventListener("change", () => {
         sortPerTab[currentTab] = sortSelect.value;
         loadData(currentTab);
       });
-
       document.querySelectorAll(".tabs button").forEach(button => {
         button.addEventListener("click", () => loadData(button.dataset.tab));
       });
-
       loadData('waifu-of-the-day', true);
       loadData('main');
     };
